@@ -1,18 +1,21 @@
 #include <stdio.h>
 #define MaxSize 50				// 定义线性表的最大长度
+#define OK 0
+#define ERROR 1
 
-typedef int DataType;
+typedef int ElemType;
 
 typedef struct 
 {
-	DataType data[MaxSize];		// 顺序表的元素		
+	ElemType data[MaxSize];		// 顺序表的元素		
 	int length;					// 顺序表的当前长度
 } SeqList;						// 顺序表的类型定义
 
 // 初始化顺序表
-void InitList(SeqList* L)
+int InitList(SeqList* L)
 {
-	L->length = 0;					
+	L->length = 0;
+	return OK;					
 }
 
 // 求顺序表长度
@@ -24,14 +27,14 @@ int Length(SeqList L)
 // 插入操作
 // 在顺序表L的第i（1 ≤ i ≤ length + 1）个位置插入新元素e
 // 插入成功返回0，插入失败返回1
-int ListInsert(SeqList* L, int i, DataType e)
+int ListInsert(SeqList* L, int i, ElemType e)
 {
 	if (i < 1 || i > L->length + 1) {		// 判断i的范围是否有效
-		return 1;
+		return ERROR;
 	}
 
 	if (L->length >= MaxSize) {				// 当前空间已满，不能插入
-		return 1;
+		return ERROR;
 	}
 
 	for (int j = L->length; j >= i; --j) {	// 将第i个位置及之后的元素后移
@@ -41,16 +44,16 @@ int ListInsert(SeqList* L, int i, DataType e)
 	L->data[i-1] = e;						// 在位置i处插入e
 	++L->length;							// 线性表长度加1
 
-	return 0;
+	return OK;
 }
 
 // 删除操作
 // 删除顺序表L中第i（1 ≤ i ≤ length）个位置的元素
 // 删除成功返回0，删除失败返回1。如删除成功，用e返回删除元素的值
-int ListDelete(SeqList* L, int i, DataType* e) 
+int ListDelete(SeqList* L, int i, ElemType* e) 
 {
 	if (i < 1 || i > L->length) {			// 判断i的范围是否有效
-		return 1;
+		return ERROR;
 	}
 
 	*e = L->data[i-1];						// 将要删除的元素赋值给e
@@ -61,12 +64,12 @@ int ListDelete(SeqList* L, int i, DataType* e)
 
 	--L->length;							// 线性表长度减1
 
-	return 0;
+	return OK;
 }
 
 // 按值查找
 // 在顺序表L中查找第一个值等于e的元素，并返回其位序
-int LocateElem(SeqList L, DataType e) 
+int LocateElem(SeqList L, ElemType e) 
 {
 	for (int i = 0; i < L.length; ++i) {
 		if (L.data[i] == e) {
@@ -74,7 +77,7 @@ int LocateElem(SeqList L, DataType e)
 		}
 	}
 
-	return 0;								// 退出循环，说明查找失败
+	return OK;								// 退出循环，说明查找失败
 }
 
 // 按位查找
@@ -82,7 +85,7 @@ int LocateElem(SeqList L, DataType e)
 int GetElem(SeqList L, int i) 
 {
 	if (i < 1 || i > L.length) {
-		return 1;
+		return ERROR;
 	}
 
 	return L.data[i-1];
@@ -92,7 +95,7 @@ int GetElem(SeqList L, int i)
 int PrintList(SeqList L)
 {
 	if (L.length == 0) {
-		return 1;
+		return ERROR;
 	}
 
 	for (int i = 0; i < L.length; ++i) {
@@ -101,17 +104,17 @@ int PrintList(SeqList L)
 
 	printf("\n");
 
-	return 0;
+	return OK;
 }
 
 // 判空操作
 int Empty(SeqList L)
 {
 	if (L.length == 0) {
-		return 1;
+		return OK;
 	}
 
-	return 0;
+	return ERROR;
 }
 
 
