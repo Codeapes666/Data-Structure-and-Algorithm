@@ -112,7 +112,7 @@ int Empty(SeqList L)
 	return ERROR;
 }
 
-// 输出操作
+// 遍历操作
 int PrintList(SeqList L)
 {
 	if (L.length == 0) {
