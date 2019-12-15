@@ -1,8 +1,8 @@
 #include <stdio.h>
 
 #define MaxSize 50				// 定义线性表的最大长度
-#define OK 0
-#define ERROR 1
+#define OK 1
+#define ERROR 0
 
 typedef int ElemType;
 
@@ -84,10 +84,10 @@ int LocateElem(SeqList L, ElemType e)
 		}
 	}
 
-	return OK;								// 退出循环，说明查找失败
+	return ERROR;
 }
 
-// 按位查找
+// 按序查找
 // 获取表L中第i个位置的元素值
 int GetElem(SeqList L, int i) 
 {
@@ -100,6 +100,16 @@ int GetElem(SeqList L, int i)
 	}
 
 	return L.data[i - 1];
+}
+
+// 判空操作
+int Empty(SeqList L)
+{
+	if (L.length == 0) {
+		return OK;
+	}
+
+	return ERROR;
 }
 
 // 输出操作
@@ -117,14 +127,4 @@ int PrintList(SeqList L)
 	printf("\n");
 
 	return OK;
-}
-
-// 判空操作
-int Empty(SeqList L)
-{
-	if (L.length == 0) {
-		return OK;
-	}
-
-	return ERROR;
 }
