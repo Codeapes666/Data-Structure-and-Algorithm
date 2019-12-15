@@ -14,6 +14,21 @@ typedef struct LNode {
 
 // LinkList与LNode*，两者本质上是等价的
 
+// 初始化单链表
+LinkList InitList(LinkList* L)
+{
+    *L = (LinkList)malloc(sizeof(LNode));
+
+    if (*L == NULL ) {
+        return;
+    }
+
+    (*L)->data = 0;
+    (*L)->next = NULL;
+
+    return *L;
+}
+
 // 前插法创建单链表
 LinkList CreatList_H(LinkList &L)
 {
@@ -79,8 +94,7 @@ LinkList CreatList_R(LinkList &L)
 int Length(LinkList L)
 {
     int length = 0;
-    LNode* p = NULL;
-    p = L->next;
+    LNode* p = L->next;
 
     while (p != NULL) {
         ++length;
@@ -134,8 +148,7 @@ int ListInsert(LinkList &L, int i, ElemType e)
     int j = 0;
 
     // 查找第i-1个结点，p指向该结点
-    while (p && j < i - 1)
-    {
+    while (p && j < i - 1) {
         p = p->next;
         ++j;
     }
@@ -168,14 +181,12 @@ int ListDelete(LinkList &L, int i)
     int j = 0;
 
     // 查找第i-1个结点，p指向该结点
-    while ((p->next) && (j < i -1))
-    {
+    while ((p->next) && (j < i -1)) {
         p = p->next;
         ++j;
     }
 
-    if (!(p->next) || (j > i - 1))
-    {
+    if (!(p->next) || (j > i - 1)) {
         return ERROR;
     }
 
@@ -198,14 +209,14 @@ int Empty(LinkList L)
 	return ERROR;
 }
 
-// 输出操作
+// 遍历操作
 int PrintList(LinkList L)
 {
-    // 判断链表长度是否为0
-    if (Length(L) == 0) {
+    if (L == NULL) {
         return ERROR;
     }
 
+    // p指向头结点的下一个结点
     LinkList p = L->next;
 
     while (p != NULL) {
@@ -214,5 +225,48 @@ int PrintList(LinkList L)
         p = p->next;
     }
     
+    return OK;
+}
+
+// 销毁操作
+int DestroyList(LinkList* L)
+{
+    LinkList p = NULL;
+
+    if (*L == NULL) {
+        return ERROR;
+    }
+
+    while (*L != NULL) {
+        p = *L;
+        *L = (*L)->next;
+        free(p);
+        p = NULL;
+    }
+
+    return OK;
+}
+
+// 清空操作
+int ClearList(LinkList L)
+{
+    if (L == NULL) {
+        return ERROR;
+    }
+
+    LinkList p = NULL;
+    LinkList q = NULL;
+
+    // p指向头结点的下一个结点
+    p = L->next;                
+
+    while (p != NULL) {
+        q = p->next;
+        free(p);
+        p = q;
+    }
+    
+    L->next = NULL;
+
     return OK;
 }
