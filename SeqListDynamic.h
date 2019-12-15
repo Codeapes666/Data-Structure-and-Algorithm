@@ -2,8 +2,8 @@
 #include <stdlib.h>
 
 #define InitSize 100	 // 定义线性表的初始长度
-#define OK 0
-#define ERROR 1
+#define OK 1
+#define ERROR 0
 
 typedef int ElemType;
 
@@ -29,6 +29,8 @@ int InitList(SeqList* L)
 
     // 初始化表的存储容量，即当前表最大的存储量
     L->MaxSize = InitSize;
+
+    return OK;
 }
 
 // 求顺序表长度
@@ -112,10 +114,10 @@ int LocateElem(SeqList L, ElemType e)
 		}
 	}
 
-	return ERROR;							// 退出循环，说明查找失败
+	return ERROR;							
 }
 
-// 按位查找
+// 按序查找
 // 获取表L中第i个位置的元素值
 int GetElem(SeqList L, int i ,ElemType* e) 
 {
