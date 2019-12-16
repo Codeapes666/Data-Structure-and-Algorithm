@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define InitSize 100	 // 定义线性表的初始长度
+#define InitSize 50	    // 定义线性表的初始长度
 #define OK 1
 #define ERROR 0
 
