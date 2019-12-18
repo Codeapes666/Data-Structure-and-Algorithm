@@ -62,9 +62,9 @@ void BubbleSort2(SeqList &L)
                 flag = TRUE;
 
                 // 交换前后两个记录
-                RedType temp = L.r[i];
-                L.r[i] = L.r[i + 1];
-                L.r[i] = temp;
+                RedType temp = L.r[j - 1];
+                L.r[j - 1] = L.r[j];
+                L.r[j] = temp;
             }
         }
         if (flag == FALSE) {
