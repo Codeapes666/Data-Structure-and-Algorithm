@@ -14,7 +14,7 @@ typedef struct {
 }SeqList;                       // 顺序表类型
 
 // 折半插入排序
-// 时间复杂度：O(n²)
+// 平均时间复杂度：O(n²)
 // 空间复杂度：O(1)
 // 稳定性：稳定
 void BInserSort(SeqList &L)
