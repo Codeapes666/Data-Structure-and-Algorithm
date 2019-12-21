@@ -4,7 +4,6 @@ typedef int KeyType;            // 定义关键字类型为整型
 
 typedef struct {
     KeyType key;                // 关键字项
-    InfoType otherinfo;         // 其它数据项
 }RedType;                       // 记录类型
 
 typedef struct {
