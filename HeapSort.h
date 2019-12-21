@@ -71,6 +71,9 @@ void CreatHeap(SeqList &L)
 }
 
 // 堆排序
+// 平均时间复杂度：O(nlog2n)
+// 空间复杂度：O(1)
+// 稳定性：不稳定
 void HeapSort(SeqList &L)
 {
     int i = 0;
