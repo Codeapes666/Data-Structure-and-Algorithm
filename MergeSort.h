@@ -48,30 +48,37 @@ void Merge(SeqList R, SeqList &L, int low, int mid, int high)
 // 稳定性：稳定
 void MergeSort(SeqList R, SeqList &L, int low, int high)
 {
-    // 初始化结构体对象
-    SeqList S = {NULL, 0};
-
-    S.r = (RedType*)malloc(sizeof(RedType) * MAXSIZE);
-
-    // 若内存分配失败，直接return
-    if (S.r == NULL) {
-        return;
-    }
-
     if (low == high) {
         L.r[low] = R.r[low];
     } else {
+        // 初始化结构体对象
+        SeqList S = {NULL, 0};
+
+        S.r = (RedType*)malloc(sizeof(RedType) * MAXSIZE);
+
+        // 若内存分配失败，直接return
+        if (S.r == NULL) {
+            return;
+        }
+
         // 将当前序列一分为二，求中间位置
         int mid = (low + high) / 2;
         
-        // 对子序列R.r[low...mid]递归归并排序，结果放入S[low...mid]
+        // 对子序列R.r[low...mid]递归归并排序，结果放入S.r[low...mid]
         MergeSort(R, S, low, mid);
 
-        // 对子序列R.r[mid + 1...high]递归归并排序，结果放入S[mid + 1...high]
+        // 对子序列R.r[mid + 1...high]递归归并排序，结果放入S.r[mid + 1...high]
         MergeSort(R, S, mid + 1, high);
 
-        // 将S[low...mid]和S[mid + 1...high]归并到L[low...high]
+        // 将S.r[low...mid]和S.r[mid + 1...high]归并到L.r[low...high]
         Merge(S, L, low, mid, high);
+
+        if (S.r != NULL) {
+            // 释放内存
+            free(S.r);
+            // 指针置空
+            S.r = NULL;
+        }
     }
 
 }
