@@ -33,9 +33,9 @@ int InitStack(SeqStack &S)
 int DestoryStack(SeqStack &S)
 {
     if (S.base) {
-        free(S.base);
-        S.base = NULL;
-        S.top = NULL;
+        free(S.base);       // 释放空间    
+        S.base = NULL;      // 指针置空
+        S.top = NULL;       // 指针置空
         S.stacksize = 0;
 
         return OK;
