@@ -7,6 +7,7 @@
 
 typedef int ElemType;
 
+// 顺序栈的存储结构
 typedef struct {
     ElemType* base;         // 栈底指针
     ElemType* top;          // 栈顶指针
