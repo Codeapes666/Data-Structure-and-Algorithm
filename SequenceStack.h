@@ -73,7 +73,7 @@ Status StackLength(SeqStack S)
 }
 
 // 取栈顶元素
-Status GetTop(SeqStack S)
+ElemType GetTop(SeqStack S)
 {
     if (S.top != S.base) {         // 栈非空
         return *(S.top - 1);       // 返回栈顶元素的值，栈顶指针不变
