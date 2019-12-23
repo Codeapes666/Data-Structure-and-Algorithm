@@ -1,7 +1,8 @@
 #include <stdlib.h>
 
-#define OK 1
-#define ERROR 0
+#define OK          1
+#define ERROR       0
+#define OVERFLOW   -1
 
 typedef int ElemType;
 typedef int Status;
@@ -21,7 +22,7 @@ Status InitStack(LinkStack &S)
 }
 
 // 取栈顶元素
-Status GetTop(LinkStack S)
+ElemType GetTop(LinkStack S)
 {
     if (S != NULL) {    // 栈非空
         return S->data; // 返回栈顶元素的值，栈顶指针不变
@@ -35,7 +36,7 @@ Status Push(LinkStack &S, ElemType e)
 
     // 内存分配失败
     if (p == NULL) {
-        return ERROR;
+        exit(OVERFLOW);
     }
 
     p->data = e;        // 将新结点数据域置为e
