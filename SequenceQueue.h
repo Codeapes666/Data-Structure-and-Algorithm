@@ -79,7 +79,7 @@ Status QueueLength(SeqQueue Q)
 }
 
 // 取队头元素
-Status GetHead(SeqQueue Q)
+ElemType GetHead(SeqQueue Q)
 {
     if (Q.front != Q.rear) {                // 队列非空
         return Q.base[Q.front];             // 返回队头元素的值，队头指针不变
