@@ -4,6 +4,7 @@
 #define ERROR 0
 
 typedef int ElemType;
+typedef int Status;
 
 // 链栈的存储结构
 typedef struct StackNode{
@@ -12,15 +13,23 @@ typedef struct StackNode{
 }StackNode, *LinkStack;
 
 // 栈的初始化
-int InitStack(LinkStack &S)
+Status InitStack(LinkStack &S)
 {   // 构造一个空栈S，栈顶指针置空
     S = NULL;
 
     return OK;
 }
 
+// 取栈顶元素
+Status GetTop(LinkStack S)
+{
+    if (S != NULL) {    // 栈非空
+        return S->data; // 返回栈顶元素的值，栈顶指针不变
+    }
+}
+
 // 入栈
-int Push(LinkStack &S, ElemType e)
+Status Push(LinkStack &S, ElemType e)
 {   // 生成新结点
     LinkStack p = (StackNode*)malloc(sizeof(StackNode));
 
@@ -37,7 +46,7 @@ int Push(LinkStack &S, ElemType e)
 }
 
 // 出栈
-int Pop(LinkStack &S, ElemType &e)
+Status Pop(LinkStack &S, ElemType &e)
 {   // 栈空
     if (S == NULL) {
         return ERROR;
@@ -54,10 +63,3 @@ int Pop(LinkStack &S, ElemType &e)
     return OK;
 }
 
-// 取栈顶元素
-ElemType GetTop(LinkStack S)
-{
-    if (S != NULL) {    // 栈非空
-        return S->data; // 返回栈顶元素的值，栈顶指针不变
-    }
-}
