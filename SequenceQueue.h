@@ -8,8 +8,6 @@
 #define FALSE       0
 #define OVERFLOW   -1
 
-
-
 typedef int ElemType;
 typedef int Status;
 
@@ -41,13 +39,13 @@ Status InitQueue(SeqQueue &Q)
 
 // 销毁队列
 Status DestroyQueue(SeqQueue &Q)
-{
+{   
     if (Q.base == NULL) {
         return ERROR;
     }
 
-    free(Q.base);
-    Q.base = NULL;
+    free(Q.base);               // 释放内存
+    Q.base = NULL;              // 指针置空
 
     Q.front = Q.rear = 0;
 
@@ -88,7 +86,7 @@ ElemType GetHead(SeqQueue Q)
 
 // 入队
 Status EnQueue(SeqQueue &Q, ElemType e)
-{   // 尾指针在循环意义上加1后等于头指针，表明堆满
+{   // 尾指针在循环意义上加1后等于头指针，表明队满
     if ((Q.rear + 1) % MAXQSIZE == Q.front) {
         return ERROR;
     }
