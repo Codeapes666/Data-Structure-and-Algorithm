@@ -22,7 +22,7 @@ typedef struct {                // 链式队列
 }LinkQueue;
 
 // 链队的初始化
-Status InitQueue(LinkQueue &Q)
+Status InitQueue(LinkQueue &Q)  // 构造一个只有一个头结点的空队
 {   // 生成新结点作为头结点
     QNode* p = (QNode*)malloc(sizeof(QNode));
 
@@ -44,7 +44,7 @@ Status DestroyQueue(LinkQueue &Q)
         Q.rear = Q.front->next;
 
         free(Q.front);
-        Q.front = Q.rear = NULL;
+        Q.front = Q.rear;
     }
 
     return OK;
@@ -61,7 +61,7 @@ Status ClearQueue(LinkQueue &Q)
     while (p != NULL) {
         q = p->next;
         free(p);
-        p = q = NULL;
+        p = q;
     }
 
     Q.rear = Q.front;
