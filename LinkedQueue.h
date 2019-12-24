@@ -1,7 +1,10 @@
+#include <stdio.h>
 #include <stdlib.h>
 
 #define OK          1
 #define ERROR       0
+#define TRUE        1
+#define FALSE       0
 #define OVERFLOW   -1
 
 typedef int ElemType;
@@ -34,6 +37,63 @@ Status InitQueue(LinkQueue &Q)
     return OK;
 }
 
+// 销毁链队
+Status DestroyQueue(LinkQueue &Q)
+{
+    while (Q.front != NULL) {
+        Q.rear = Q.front->next;
+
+        free(Q.front);
+        Q.front = Q.rear = NULL;
+    }
+
+    return OK;
+}
+
+// 清空链队
+Status ClearQueue(LinkQueue &Q)
+{
+    QueuePtr q = NULL;
+    QueuePtr p = NULL;
+    p = Q.front->next;
+    Q.front->next = NULL;
+
+    while (p != NULL) {
+        q = p->next;
+        free(p);
+        p = q = NULL;
+    }
+
+    Q.rear = Q.front;
+
+    return OK;
+}
+
+// 判空
+Status QueueEmpty(LinkQueue Q)
+{
+    if (Q.front->next == NULL) {
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+// 求链队长度
+Status QueueLength(LinkQueue Q)
+{
+    int len = 0;
+    QueuePtr p = NULL;
+    p = Q.front->next;
+
+    while (p != NULL) {
+        len++;
+        p = p ->next;
+    }
+
+    return len;
+}
+
 // 取队头元素
 ElemType GetHead(LinkQueue Q)
 {
@@ -54,6 +114,21 @@ Status EnQueue(LinkQueue &Q, ElemType e)
     Q.rear->next = p;
 
     Q.rear = p;                // 修改队尾指针                  
+
+    return OK;
+}
+
+// 遍历链列
+Status QueueTraverse(LinkQueue Q)
+{
+    QueuePtr p = NULL;
+    p = Q.front->next;
+
+    while (p != NULL) {
+        printf("%d ", p->data);
+        p = p->next;
+    }
+    printf("\n");
 
     return OK;
 }
