@@ -11,6 +11,9 @@ typedef struct LNode {
     struct LNode* next;     // 指针域
 }LNode, *LinkList;          // LinkList为指向结构体LNode的指针类型
 
+// 循环单链表的操作和单链表基本一致，差别仅在于：
+// 当链表遍历时，判别当前指针p是否指向表尾结点的终止条件不同
+
 // 遍历操作
 int PrintList(LinkList L)
 {
