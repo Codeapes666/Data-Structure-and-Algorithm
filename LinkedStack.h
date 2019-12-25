@@ -1,7 +1,10 @@
+#include <stdio.h>
 #include <stdlib.h>
 
 #define OK          1
 #define ERROR       0
+#define TRUE        1
+#define FALSE       0
 #define OVERFLOW   -1
 
 typedef int ElemType;
@@ -14,11 +17,66 @@ typedef struct StackNode{
 }StackNode, *LinkStack;
 
 // 栈的初始化
+// 这里规定链栈没有头结点
 Status InitStack(LinkStack &S)
 {   // 构造一个空栈S，栈顶指针置空
     S = NULL;
 
     return OK;
+}
+
+// 销毁栈
+Status DestoryStack(LinkStack &S)
+{
+    LinkStack p = NULL;
+
+    while (S != NULL) {
+        p = S;
+        S = S->next;
+        free(p);
+    }
+    
+    free(S);
+    S = NULL;
+
+    return OK;
+}
+
+// 清空栈
+Status ClearStack(LinkStack &S)
+{
+    LinkStack p = NULL;
+
+    while (S != NULL) {
+        p = S;
+        S = S->next;
+        free(p);
+    }
+
+    return OK;
+}
+
+// 判空
+Status StackEmpty(LinkStack S)
+{
+    if (S == NULL) {
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+// 求栈长度
+Status StackLength(LinkStack S)
+{
+    int length = 0;
+
+    while (S->next != NULL) {
+        length++;
+        S = S->next;
+    }
+
+    return length;
 }
 
 // 取栈顶元素
@@ -60,6 +118,18 @@ Status Pop(LinkStack &S, ElemType &e)
 
     free(p);            // 释放原栈顶元素的空间
     p = NULL;           // 指针置空
+
+    return OK;
+}
+
+// 遍历栈
+Status StackTraverse(LinkStack S)
+{
+    while (S != NULL) {
+        printf("%d ", S->data);
+        S = S->next;
+    }
+    printf("\n");
 
     return OK;
 }
