@@ -82,16 +82,16 @@ Status QueueEmpty(LinkQueue Q)
 // 求链队长度
 Status QueueLength(LinkQueue Q)
 {
-    int len = 0;
+    int length = 0;
     QueuePtr p = NULL;
     p = Q.front->next;
 
     while (p != NULL) {
-        len++;
+        length++;
         p = p ->next;
     }
 
-    return len;
+    return length;
 }
 
 // 取队头元素
