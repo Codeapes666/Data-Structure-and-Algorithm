@@ -35,14 +35,12 @@ Status DestoryStack(LinkStack &S)
         S = S->next;
         free(p);
     }
-    
-    free(S);
-    S = NULL;
 
     return OK;
 }
 
 // 清空栈
+// 不带头结点的链栈，销毁和清空实现相同
 Status ClearStack(LinkStack &S)
 {
     LinkStack p = NULL;
