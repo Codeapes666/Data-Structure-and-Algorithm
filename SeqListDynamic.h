@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define InitSize 50	    // 定义线性表的初始长度
-#define OK 1
-#define ERROR 0
+#define InitSize    50	// 定义线性表的初始长度
+#define OK          1
+#define ERROR       0
+#define OVERFLOW   -1
 
 typedef int ElemType;
 
@@ -20,8 +21,8 @@ int InitList(SeqList* L)
     L->data = (ElemType*)malloc(sizeof(ElemType) * InitSize);
 
     // 判断内存是否分配成功
-    if (!(L->data)) {
-        return ERROR;
+    if (L->data == NULL) {
+        exit(OVERFLOW);
     }
 
     // 内存分配成功，开始是空表，故长度置为0
@@ -54,8 +55,8 @@ int ListInsert(SeqList* L, int i, ElemType e)
 		
         pList->data = (ElemType*)realloc(L->data, (L->MaxSize + InitSize) * sizeof(ElemType)); 
 
-        if (!(pList->data)) {
-            return ERROR;
+        if (pList->data == NULL) {
+            exit(OVERFLOW);
         }
 
         L->data = pList->data;
@@ -166,7 +167,7 @@ int Empty(SeqList L)
 int DestroyList(SeqList* L)
 {
     // 若当前表为空，直接return
-    if (!(L->data)) {
+    if (L->data == NULL) {
         return ERROR;
     }
 
