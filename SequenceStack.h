@@ -23,7 +23,7 @@ Status InitStack(SeqStack &S)
 {   // 为顺序栈动态分配一个最大容量为MAXSIZE的数组空间
     S.base = (ElemType*)malloc(sizeof(ElemType) * MAXSIZE);
 
-    if (!S.base) {          // 若内存分配失败
+    if (S.base == NULL) {          // 若内存分配失败
         exit(OVERFLOW);
     }
 
