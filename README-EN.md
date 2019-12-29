@@ -1,89 +1,84 @@
-# Data Structure And Algorithm in C
+# Data Structure and Algorithm in C
 
 [![Travis](https://img.shields.io/badge/language-C-red.svg)](https://developer.apple.com/.md)
 
 
 [There is an Chinese version of README here. just click it！](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/README.md)
 
-我会尽力将 LeetCode 上所有的题目都用动画的形式演示出来，计划用 3 到 4 年时间去完成它，期待与你见证这一天！
 
+Welcome to my blog：[https://www.codeapes.cn](https://www.codeapes.cn)
 
-欢迎访问我的个人博客：[https://www.codeapes.cn](https://www.codeapes.cn)
+## Linear List
 
+### Sequential List
 
-## 线性表
+[Sequential List(Static)](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/SeqListStatic.h)
 
-### 顺序表
+[Sequential List(Dynamic)](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/SeqListDynamic.h)
 
-[顺序表(静态)](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/SeqListStatic.h)
+### Single Linked List
 
-[顺序表(动态)](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/SeqListDynamic.h)
+[Single Linked List](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/SinglyLinkedList.h)
 
-### 单链表
+### Circular Linked List
 
-[单链表](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/SinglyLinkedList.h)
+[Circular Linked List](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/CircularLinkedList.h)
 
-### 循环链表
+### Double Linked List
 
-[循环链表](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/CircularLinkedList.h)
+[Double Linked List](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/DoubleLinkedList.h)
 
-### 双向链表
+## Heap and Stack
 
-[双向链表](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/DoubleLinkedList.h)
+### Sequential Stack
 
-## 栈和队列
+[Sequential Stack](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/SequenceStack.h)
 
-### 顺序栈
+### Linked Stack
 
-[顺序栈](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/SequenceStack.h)
+[Linked Stack](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/LinkedStack.h)
 
-### 链栈
+### Sequence Queue
 
-[链栈](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/SequenceStack.h)
+[Sequence Queue](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/SequenceQueue.h)
 
-### 顺序队
+### Linked Queue
 
-[顺序队](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/SequenceQueue.h)
+[Linked Queue](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/LinkedQueue.h)
 
-### 链队
+## String、Array and Generalized List
 
-[链队](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/LinkedQueue.h)
+## Tree and BinaryTree
 
-## 串、数组和广义表
+[BinaryTree](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/BinaryTree.h)
 
-## 树和二叉树
+## Graph
 
-[遍历二叉树](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/BinaryTree.h)
+## Search
 
-[线索二叉树]()
+## Sort
 
-## 图
+### Insertion Sort
 
-## 查找
+[Straight Insertion Sort](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/StraightInsertionSort.h)
 
-## 排序
+[Binary Insertion Sort](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/BinaryInsertionSort.h)
 
-### 插入排序
+[Shell Sort](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/ShellSort.h)
 
-[直接插入排序](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/StraightInsertionSort.h)
+### Exchange Sort
 
-[折半插入排序](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/BinaryInsertionSort.h)
+[Bubble Sort](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/BubbleSort.h)
 
-[希尔排序](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/ShellSort.h)
+[Quick Sort](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/QuickSort.h)
 
-### 交换排序
+### Selection Sort
 
-[冒泡排序](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/BubbleSort.h)
+[Simple Selection Sort](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/SimpleSelectionSort.h)
 
-[快速排序](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/QuickSort.h)
+[HeapSort](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/HeapSort.h)
 
-### 选择排序
+### Merge Sort
 
-[简单选择排序](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/SimpleSelectionSort.h)
-
-[堆排序](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/HeapSort.h)
-
-### 归并排序
-
-[归并排序](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/MergeSort.h)
+[Merge Sort](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/MergeSort.h)
 
