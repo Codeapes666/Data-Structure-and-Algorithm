@@ -1,4 +1,4 @@
-# Data Structure And Algorithm（C）
+# Data Structure And Algorithm in C
 
 [![Travis](https://img.shields.io/badge/language-C-red.svg)](https://developer.apple.com/.md)
 
