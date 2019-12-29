@@ -5,8 +5,6 @@
 
 [There is an English version of README here. just click it！](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/README-EN.md)
 
-我会尽力将 LeetCode 上所有的题目都用动画的形式演示出来，计划用 3 到 4 年时间去完成它，期待与你见证这一天！
-
 
 欢迎访问我的个人博客：[https://www.codeapes.cn](https://www.codeapes.cn)
 
@@ -39,7 +37,7 @@
 
 ### 链栈
 
-[链栈](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/SequenceStack.h)
+[链栈](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/LinkedStack.h)
 
 ### 顺序队
 
@@ -53,9 +51,8 @@
 
 ## 树和二叉树
 
-[遍历二叉树](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/BinaryTree.h)
+[二叉树](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/BinaryTree.h)
 
-[线索二叉树]()
 
 ## 图
 
