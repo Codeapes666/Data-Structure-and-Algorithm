@@ -51,8 +51,9 @@
 
 ## 树和二叉树
 
-[二叉树](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/BinaryTree.h)
+[遍历二叉树](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/TraversingBinaryTree.h)
 
+[线索二叉树](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/ThreadedBinaryTree.h)
 
 ## 图
 
