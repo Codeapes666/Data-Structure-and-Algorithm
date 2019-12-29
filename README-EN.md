@@ -50,7 +50,9 @@ Welcome to my blog：[https://www.codeapes.cn](https://www.codeapes.cn)
 
 ## Tree and BinaryTree
 
-[BinaryTree](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/BinaryTree.h)
+[Traversing Binary Tree](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/TraversingBinaryTree.h)
+
+[Threaded Binary Tree](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/ThreadedBinaryTree.h)
 
 ## Graph
 
