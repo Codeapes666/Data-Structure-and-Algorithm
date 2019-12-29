@@ -1,4 +1,4 @@
-# 数据结构与算法（C语言实现）
+# 数据结构与算法：C语言实现
 
 [![Travis](https://img.shields.io/badge/language-C-red.svg)](https://developer.apple.com/.md)
 
