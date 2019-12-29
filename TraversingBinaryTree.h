@@ -13,12 +13,12 @@
 #define FALSE       0
 #define OVERFLOW   -1
 
-typedef char ElemType;
+typedef char TElemType;
 typedef int Status;
 
 // 二叉树的二叉链表存储结构
 typedef struct BiTNode {
-    ElemType data;                  // 结点数据域
+    TElemType data;                 // 结点数据域
     struct BiTNode* lchild;         // 左孩子结点
     struct BiTNode* rchild;         // 右孩子结点
 }BiTNode, *BiTree;
@@ -115,7 +115,7 @@ Status CreateBiTree(BiTree &T)
 }
 
 // 复制二叉树
-int CopyBiTree(BiTree T, BiTree &NewT)
+Status CopyBiTree(BiTree T, BiTree &NewT)
 {   // 复制一棵和T完全相同的二叉树
     if (T == NULL) {                            // 如果是空树，递归结束
         NewT = NULL;
