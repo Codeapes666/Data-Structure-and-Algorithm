@@ -48,7 +48,7 @@ Status InitStack(LinkStack &S)
 // 入栈
 Status Push(LinkStack &S, StackElemType e)
 {   // 生成新结点
-    LinkStack q = (StackNode*)malloc(sizeof(StackNode)) ;
+    LinkStack q = (StackNode*)malloc(sizeof(StackNode));
     
     if(q == NULL) {             // 内存分配失败
         exit(OVERFLOW);
