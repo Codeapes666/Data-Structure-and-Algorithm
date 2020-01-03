@@ -4,6 +4,8 @@
 #define InitSize    50	// 定义线性表的初始长度
 #define OK          1
 #define ERROR       0
+#define TRUE        1
+#define FALSE       0
 #define OVERFLOW   -1
 
 typedef int ElemType;
@@ -34,10 +36,128 @@ int InitList(SeqList* L)
     return OK;
 }
 
+// 销毁线性表
+// 用malloc函数分配的空间在释放时是连续释放的，即将物理地址相邻的若干空间全部释放
+// 所以顺序表销毁可以只释放基址，就会自动释放所有空间，而链表要一个一个的把节点删除
+int DestroyList(SeqList* L)
+{
+    // 若当前表为空，直接return
+    if (L->data == NULL) {
+        return ERROR;
+    }
+
+    // 释放内存
+    free(L->data);
+
+    // 指针置空
+    L->data = NULL;
+
+    return OK;
+}
+
+// 清空线性表
+int ClearList(SeqList &L)
+{   
+    if (L.length == 0) {
+		return ERROR;
+	}
+
+    // 数组下标范围为[0, L.length)
+    int i = 0;
+	for (i = 0; i < L.length; ++i) {
+		// 线性表中每个元素都置为0
+        *(L.data + i) = 0;
+	}
+
+    return OK;
+}
+
+// 判空
+int ListEmpty(SeqList L)
+{
+	if (L.length == 0) {
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
 // 求顺序表长度
 int Length(SeqList L)
 {
 	return L.length;
+}
+
+// 按序查找
+// 获取表L中第i个位置的元素值
+int GetElem(SeqList L, int i ,ElemType* e) 
+{
+    if (L.length == 0) {
+        return ERROR;
+    }
+	if (i < 1 || i > L.length) {
+		return ERROR;
+	}
+
+    *e = *(L.data + i - 1);
+
+	return OK;
+}
+
+// 按值查找
+// 在顺序表L中查找第一个值等于e的元素，并返回其位序
+int LocateElem(SeqList L, ElemType e) 
+{
+    if (L.length == 0) {
+        return ERROR;
+    }
+
+    int i = 0;
+	for (i = 0; i < L.length; ++i) {
+		if (*(L.data + 1) == e) {
+			return i + 1;					// 下表为i的元素等于e，返回其位序i+1
+		}
+	}
+
+	return ERROR;							
+}
+
+// 返回前驱元素值
+int PriorElem(SeqList L, ElemType cur_e, ElemType &pre_e)
+{
+    if (L.length == 0) {
+        return ERROR;
+    }
+
+    int i = 0;
+    for (i = 0; i < L.length; ++i) {
+        // 当前元素cur_e不是第一个元素则有前驱
+        if (i != 0 && (*(L.data + i) == cur_e)) {
+            pre_e = *(L.data + i - 1);
+            return pre_e;
+        }
+    }
+
+    return ERROR;
+}
+
+// 返回后继元素值
+int NextElem(SeqList L, ElemType cur_e, ElemType &next_e)
+{
+    if (L.length == 0) {
+        return ERROR;
+    }
+
+    int i = 0;
+    for (i = 0; i < L.length; ++i) {
+        // 当前元素cur_e不是最后一个元素则有后继
+        if ((i != L.length - 1) && (*(L.data + i) == cur_e)) {
+            next_e = *(L.data + i + 1);
+            return next_e;
+        }
+    }
+
+    return ERROR;
 }
 
 // 插入操作
@@ -100,42 +220,8 @@ int ListDelete(SeqList* L, int i, ElemType* e)
 	return OK;
 }
 
-// 按值查找
-// 在顺序表L中查找第一个值等于e的元素，并返回其位序
-int LocateElem(SeqList L, ElemType e) 
-{
-    if (L.length == 0) {
-        return ERROR;
-    }
-
-    int i = 0;
-	for (i = 0; i < L.length; ++i) {
-		if (*(L.data + 1) == e) {
-			return i + 1;					// 下表为i的元素等于e，返回其位序i+1
-		}
-	}
-
-	return ERROR;							
-}
-
-// 按序查找
-// 获取表L中第i个位置的元素值
-int GetElem(SeqList L, int i ,ElemType* e) 
-{
-    if (L.length == 0) {
-        return ERROR;
-    }
-	if (i < 1 || i > L.length) {
-		return ERROR;
-	}
-
-    *e = *(L.data + i - 1);
-
-	return OK;
-}
-
-// 输出操作
-int PrintList(SeqList L)
+// 遍历操作
+int TraverseList(SeqList L)
 {
 	if (L.length == 0) {
 		return ERROR;
@@ -149,35 +235,6 @@ int PrintList(SeqList L)
 	printf("\n");
 
 	return OK;
-}
-
-// 判空操作
-int Empty(SeqList L)
-{
-	if (L.length == 0) {
-		return OK;
-	}
-
-	return ERROR;
-}
-
-// 销毁操作
-// 用malloc函数分配的空间在释放时是连续释放的，即将物理地址相邻的若干空间全部释放
-// 所以顺序表销毁可以只释放基址，就会自动释放所有空间，而链表要一个一个的把节点删除
-int DestroyList(SeqList* L)
-{
-    // 若当前表为空，直接return
-    if (L->data == NULL) {
-        return ERROR;
-    }
-
-    // 释放内存
-    free(L->data);
-
-    // 指针置空
-    L->data = NULL;
-
-    return OK;
 }
 
 // 合并线性表A与B，时间复杂度O(lengthA x lengthB)
@@ -239,7 +296,7 @@ void MergeList(SeqList SeqLA, SeqList SeqLB, SeqList* SeqLC)
         }
     }
 
-    // A、B不会同时比完，一定会有一个表完全插入到c之后，另一个表还有剩余
+    // A、B不会同时比完，一定会有一个表完全插入到C之后，另一个表还有剩余
     while (i <= lengthA) {
         GetElem(SeqLA, i++, &iSeqLA);
 
