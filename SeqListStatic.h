@@ -113,7 +113,7 @@ int Empty(SeqList L)
 }
 
 // 遍历操作
-int PrintList(SeqList L)
+int TraverseList(SeqList L)
 {
 	if (L.length == 0) {
 		return ERROR;
