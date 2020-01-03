@@ -33,7 +33,7 @@ typedef struct StackNode{
     struct StackNode* next;     // 指针域
 }StackNode, *LinkStack;
 
-//栈的函数定义
+//栈的初始化
 Status InitStack(LinkStack &S)
 {   // 生成新结点作为头结点
     S = (StackNode*)malloc(sizeof(StackNode));
