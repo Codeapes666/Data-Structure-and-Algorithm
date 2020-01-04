@@ -118,6 +118,29 @@ Status EnQueue(LinkQueue &Q, ElemType e)
     return OK;
 }
 
+// 出队
+Status DeQueue(LinkQueue &Q, ElemType &e)
+{   // 删除Q的队头元素，用e返回其值
+    if (Q.front == Q.rear) {    // 若队列空，则返回ERROR
+        return ERROR;
+    }
+
+    QueuePtr p = NULL;
+
+    p = Q.front->next;          // p指向队头元素
+    e = Q.front->data;          // e保存队头元素的值
+    Q.front->next = p->next;    // 修改头指针
+
+    if(Q.rear == p) {           // 最后一个元素被删，队尾指针指向头结点
+        Q.rear = Q.front;
+    }
+
+    delete p;                   // 释放原队头元素的空间
+    p = NULL;
+
+    return OK;
+}
+
 // 遍历链列
 Status QueueTraverse(LinkQueue Q)
 {
