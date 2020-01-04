@@ -59,6 +59,16 @@
 
 ## 查找
 
+### 线性表的查找
+
+[顺序查找](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/SequebtialSearch.h)
+
+[折半查找](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/BinarySearch.h)
+
+### 树表的查找
+
+### 散列表的查找
+
 ## 排序
 
 ### 插入排序
