@@ -270,7 +270,7 @@ void InOrderTraverse(BiTree T)
     }
 }
 
-// 中序遍历非递归算法
+// 中序遍历（非递归）
 // 需要借助一个栈
 void InOrderTraverseNonRecursion(BiTree T)
 {   LinkStack S = NULL;
