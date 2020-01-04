@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define InitSize    50	// 定义线性表的初始长度
+#define InitSize    50	    // 定义线性表的初始长度
 #define OK          1
 #define ERROR       0
 #define TRUE        1
@@ -12,10 +12,10 @@ typedef int ElemType;
 
 typedef struct 
 {
-	ElemType* data;		// 动态分配数组的指针		
-	int MaxSize;	    // 线性表的最大容量
-    int length;         // 线性表的当前长度
-} SeqList;				// 动态分配数组顺序表的类型定义
+	ElemType* data;		    // 动态分配数组的指针		
+	int MaxSize;	        // 线性表的最大容量
+    int length;             // 线性表的当前长度
+} SeqList;				    // 动态分配数组顺序表的类型定义
 
 // 初始化顺序表
 int InitList(SeqList &L)
@@ -105,7 +105,7 @@ int LocateElem(SeqList L, ElemType e)
     int i = 0;
 	for (i = 0; i < L.length; ++i) {
 		if (*(L.data + 1) == e) {
-			return i + 1;					// 下表为i的元素等于e，返回其位序i+1
+			return i + 1;				// 下表为i的元素等于e，返回其位序i+1
 		}
 	}
 
