@@ -10,8 +10,7 @@
 
 typedef int ElemType;
 
-typedef struct 
-{
+typedef struct {
 	ElemType* data;		    // 动态分配数组的指针		
 	int MaxSize;	        // 线性表的最大容量
     int length;             // 线性表的当前长度
