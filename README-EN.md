@@ -66,6 +66,8 @@ Welcome to my blog：[https://www.codeapes.cn](https://www.codeapes.cn)
 
 ### Search of Tree Table
 
+[Binary Sort Tree](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/BinarySortTree.h)
+
 ### Search of Hash Table
 
 
