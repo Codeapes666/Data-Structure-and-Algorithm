@@ -16,13 +16,111 @@ typedef struct
 int InitList(SeqList* L)
 {
 	L->length = 0;
+
 	return OK;					
 }
 
+// 销毁线性表
+int DestroyList(SeqList* L) {
+	L->length = 0;
+
+	return OK;
+}
+
+// 清空线性表
+// 将L重置为空表
+int ClearList(SeqList* L)
+{
+	L->length = 0;
+
+	return OK;
+}
+
+// 判空操作
+int ListEmpty(SeqList L)
+{
+	if (L.length == 0) {
+		return OK;
+	}
+
+	return ERROR;
+}
+
 // 求顺序表长度
-int Length(SeqList L)
+int ListLength(SeqList L)
 {
 	return L.length;
+}
+
+// 按序查找
+// 获取表L中第i个位置的元素值
+int GetElem(SeqList L, int i) 
+{
+	if (L.length == 0) {
+		return ERROR;
+	}
+
+	if (i < 1 || i > L.length) {
+		return ERROR;
+	}
+
+	return L.data[i - 1];
+}
+
+// 按值查找
+// 在顺序表L中查找第一个值等于e的元素，并返回其位序
+int LocateElem(SeqList L, ElemType e) 
+{
+	if (L.length == 0) {
+		return ERROR;
+	}
+
+	int i = 0;
+	for (i = 0; i < L.length; ++i) {
+		if (L.data[i] == e) {
+			return i + 1;					// 下表为i的元素等于e，返回其位序i+1
+		}
+	}
+
+	return ERROR;
+}
+
+// 返回前驱元素值
+int PriorElem(SeqList L, ElemType cur_e, ElemType* pre_e)
+{
+    if (L.length == 0) {
+        return ERROR;
+    }
+
+    int i = 0;
+    for (i = 0; i < L.length; ++i) {
+        // 当前元素cur_e不是第一个元素则有前驱
+        if (i != 0 && (L.data[i] == cur_e)) {
+            *pre_e = L.data[i - 1];
+            return *pre_e;
+        }
+    }
+
+    return ERROR;
+}
+
+// 返回后继元素值
+int NextElem(SeqList L, ElemType cur_e, ElemType* next_e)
+{
+    if (L.length == 0) {
+        return ERROR;
+    }
+
+    int i = 0;
+    for (i = 0; i < L.length; ++i) {
+        // 当前元素cur_e不是最后一个元素则有后继
+        if ((i != L.length - 1) && (L.data[i] == cur_e)) {
+            *next_e = L.data[i + 1];
+            return *next_e;
+        }
+    }
+
+    return ERROR;
 }
 
 // 插入操作
@@ -67,49 +165,6 @@ int ListDelete(SeqList* L, int i, ElemType* e)
 	--L->length;							// 线性表长度减1
 
 	return OK;
-}
-
-// 按值查找
-// 在顺序表L中查找第一个值等于e的元素，并返回其位序
-int LocateElem(SeqList L, ElemType e) 
-{
-	if (L.length == 0) {
-		return ERROR;
-	}
-
-	int i = 0;
-	for (i = 0; i < L.length; ++i) {
-		if (L.data[i] == e) {
-			return i + 1;					// 下表为i的元素等于e，返回其位序i+1
-		}
-	}
-
-	return ERROR;
-}
-
-// 按序查找
-// 获取表L中第i个位置的元素值
-int GetElem(SeqList L, int i) 
-{
-	if (L.length == 0) {
-		return ERROR;
-	}
-
-	if (i < 1 || i > L.length) {
-		return ERROR;
-	}
-
-	return L.data[i - 1];
-}
-
-// 判空操作
-int Empty(SeqList L)
-{
-	if (L.length == 0) {
-		return OK;
-	}
-
-	return ERROR;
 }
 
 // 遍历操作
