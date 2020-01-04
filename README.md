@@ -67,6 +67,8 @@
 
 ### 树表的查找
 
+[二叉排序树](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/BinarySortTree.h)
+
 ### 散列表的查找
 
 ## 排序
