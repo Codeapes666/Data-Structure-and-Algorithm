@@ -6,7 +6,7 @@ typedef struct {
 }ElemType;
 
 typedef struct {
-    ElemType* elem;     // 存储空间基地址，建表时按实际长度分配，ST.R[0]闲置不用
+    ElemType* elem;     // 存储空间基地址，建表时按实际长度分配，ST.elem[0]闲置不用
     int length;         // 当前表长度
 }SSTable;
 
