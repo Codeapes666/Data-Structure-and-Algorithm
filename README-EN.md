@@ -58,6 +58,17 @@ Welcome to my blog：[https://www.codeapes.cn](https://www.codeapes.cn)
 
 ## Search
 
+### Search of Linear List
+
+[Sequential Search](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/SequebtialSearch.h)
+
+[Binary Search](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/BinarySearch.h)
+
+### Search of Tree Table
+
+### Search of Hash Table
+
+
 ## Sort
 
 ### Insertion Sort
