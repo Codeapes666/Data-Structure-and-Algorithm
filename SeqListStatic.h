@@ -6,8 +6,7 @@
 
 typedef int ElemType;
 
-typedef struct 
-{
+typedef struct {
 	ElemType data[MaxSize];		// 顺序表的元素		
 	int length;					// 顺序表的当前长度
 } SeqList;						// 顺序表的类型定义
