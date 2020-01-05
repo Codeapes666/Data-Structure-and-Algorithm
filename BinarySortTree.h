@@ -25,7 +25,7 @@ typedef struct BSTNode {
 
 // 二叉排序树的查找
 BSTree BSTSearch(BSTree T, KeyType key)
-{   // 在跟指针T所指二叉树中递归地查找某关键字等于key的数据元素
+{   // 在根指针T所指二叉树中递归地查找某关键字等于key的数据元素
     // 若查找成功，则返回指向该数据元素结点的指针，否则返回空指针
     if (T == NULL || T->data.key == key) {      // 查找结束
         return T;
