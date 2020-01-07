@@ -129,7 +129,7 @@ Status QueueEmpty(LinkQueue Q)
 }
 
 // 入队
-Status EnQueue(LinkQueue &Q, ElemType e)
+Status EnQueue(LinkQueue &Q, QueueElemType e)
 {   // 为入队元素分配结点空间，用指针p指向
     QNode* p = (QNode*)malloc(sizeof(QNode));
 
@@ -145,7 +145,7 @@ Status EnQueue(LinkQueue &Q, ElemType e)
 }
 
 // 出队
-Status DeQueue(LinkQueue &Q, ElemType &e)
+Status DeQueue(LinkQueue &Q, QueueElemType &e)
 {   // 删除Q的队头元素，用e返回其值
     if (Q.front == Q.rear) {    // 若队列空，则返回ERROR
         return ERROR;
