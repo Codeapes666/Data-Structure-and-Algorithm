@@ -303,7 +303,7 @@ void PostOrderTraverse(BiTree T)
 // 需要借助一个队列
 void LevelOrderTraverse(BiTree T)
 {   
-    LinkQueue Q = {NULL, NULL};
+    LinkQueue Q;
     InitQueue(Q);                       // 初始化辅助队列
     BiTree p = NULL;
     EnQueue(Q, T);                      // 根结点入队
