@@ -73,8 +73,10 @@ Status InsertBST(BSTree &T, ElemType e)
 Status CreatBST(BSTree &T)
 {
     T = NULL;                                   // 将二叉排序树T初始化为空树
-    ElemType e = {0};
+    ElemType e;
     while (scanf("%d", &e.key) != EOF) {
         InsertBST(T, e);                        // 将此结点插入二叉排序树T中
     }
 }
+
+// 二叉排序树的删除
