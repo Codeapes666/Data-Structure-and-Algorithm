@@ -84,9 +84,9 @@ Status CreatBST(BSTree &T)
 // 二叉排序树的删除
 Status DeleteBST(BSTree &T, KeyType key) 
 {   // 从二叉排序树T中删除关键字等于key的结点
-    BSTree p = T;
+    BSTree p = T;                           // 指针p指向待待删结点
     BSTree q = NULL;
-    BSTree f = NULL;
+    BSTree f = NULL;                        // 指针f为p的双亲结点
 
     /*------------ 下面的while循环从根开始查找关键字等于key的结点*p ------------*/
     while (p != NULL) {
@@ -111,12 +111,13 @@ Status DeleteBST(BSTree &T, KeyType key)
         q = p;
         BSTree s = p->lchild;
 
-        while (s->rchild) {                 // 在*p的左子树中继续查找其前驱结点，即最右下结点
+        while (s->rchild != NULL) {         // 在*p的左子树中继续查找其前驱结点，即最右下结点
             q = s;
             s = s->rchild;                
         }
 
         p->data = s->data;                  // s指向被删结点的“前驱”
+
         if (q != p) {
             q ->rchild = s->lchild;         // 重接*q的右子树
         } else {
@@ -136,7 +137,7 @@ Status DeleteBST(BSTree &T, KeyType key)
     if (f == NULL) {                        // 被删除结点为根结点
         T = p;
     } else if (f->lchild == q) {            // 挂接到*f的左子树位置
-        f->rchild = p;
+        f->lchild = p;
     } else {                                // 挂接到*f的右子树位置
         f->rchild = p;
     }
