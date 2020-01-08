@@ -116,7 +116,7 @@ Status DeleteBST(BSTree &T, KeyType key)
             s = s->rchild;                
         }
 
-        p->data = s->data;                  // s指向被删结点的“前驱”
+        p->data = s->data;                  // s指向被删结点的“前驱”，即用*s替代*p
 
         if (q != p) {
             q ->rchild = s->lchild;         // 重接*q的右子树
