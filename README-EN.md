@@ -54,6 +54,8 @@ Welcome to my blog：[https://www.codeapes.cn](https://www.codeapes.cn)
 
 [Threaded Binary Tree](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/ThreadedBinaryTree.h)
 
+[Huffman Tree](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/HuffmanTree.h)
+
 ## Graph
 
 ## Search
