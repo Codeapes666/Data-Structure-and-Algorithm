@@ -55,6 +55,8 @@
 
 [线索二叉树](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/ThreadedBinaryTree.h)
 
+[哈夫曼树](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/HuffmanTree.h)
+
 ## 图
 
 ## 查找
