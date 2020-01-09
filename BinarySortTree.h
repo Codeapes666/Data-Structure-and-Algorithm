@@ -124,7 +124,10 @@ Status DeleteBST(BSTree &T, KeyType key)
             q->lchild = s->lchild;          // 重接*q的左子树
         }
 
-        return ERROR;
+        free(s);
+        s = NULL;
+
+        return OK;
     } else if (p->rchild == NULL) {         // 被删结点*p无右子树，只需重接其左子树
         q = p;
         p = p->lchild;
@@ -142,5 +145,8 @@ Status DeleteBST(BSTree &T, KeyType key)
         f->rchild = p;
     }
 
+    free(q);
+    q = NULL;
+    
     return OK;
 }
