@@ -72,6 +72,8 @@ Welcome to my blog：[https://www.codeapes.cn](https://www.codeapes.cn)
 
 ### Search of Hash Table
 
+[Search of Hash Table](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/HashSearch.h)
+
 
 ## Sort
 
