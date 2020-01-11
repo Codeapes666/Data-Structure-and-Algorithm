@@ -73,6 +73,10 @@
 
 ### 散列表的查找
 
+[散列表的查找](https://github.com/Codeapes666/DataStructureAndAlgorithm/blob/master/HashSearch.h)
+
+### 散列表的查找
+
 ## 排序
 
 ### 插入排序
