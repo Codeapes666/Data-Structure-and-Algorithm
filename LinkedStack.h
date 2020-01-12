@@ -89,9 +89,7 @@ ElemType GetTop(LinkStack S)
 Status Push(LinkStack &S, ElemType e)
 {   // 生成新结点
     LinkStack p = (StackNode*)malloc(sizeof(StackNode));
-
-    // 内存分配失败
-    if (p == NULL) {
+    if (p == NULL) {    // 若内存分配失败
         exit(OVERFLOW);
     }
 
