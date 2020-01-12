@@ -25,7 +25,7 @@ Status initHashTable(HashTable* HT)
     m = HASHSIZE;
     HT->count = m;
     HT->elem = (int*)malloc(sizeof(int) * m);
-    if (HT->elem == NULL) {
+    if (HT->elem == NULL) {     // 若内存分配失败
         exit(OVERFLOW);
     }
 
@@ -64,7 +64,7 @@ Status SearchHash(HashTable HT, int key, int* addr)
     while (HT.elem[*addr] != key) {         // 若HT.elem[*addr] == key，则说明查找成功，直接返回
         *addr = (*addr + 1) % m;            // 开放定址法的线性探测
 
-        // 如果查找到NULLKEY或循环回到原点，则说明关键字不存在，返回ERROR
+        // 如果查找到NULLKEY或循环回到原点，则说明关键字不存在，返回FALSE
         if (HT.elem[*addr] == NULLKEY || *addr == Hash(key)) {
             return FALSE;
         }
