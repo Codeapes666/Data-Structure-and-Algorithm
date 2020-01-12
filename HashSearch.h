@@ -1,14 +1,15 @@
-#include <stdio.h>
 #include <stdlib.h>
 
 #define OK          1
 #define ERROR       0
+#define TRUE        1
+#define FALSE       0
 #define OVERFLOW   -1
 
 typedef int Status;
 
 #define HASHSIZE 12             // 定义散列表长为数组的长度
-#define NULLKEY -32768
+#define NULLKEY   0             // 单元为空的标记
 
 typedef struct {
     int* elem;                  // 数据元素存储基址，动态分配数组
@@ -48,8 +49,9 @@ Status InsertHash(HashTable* HT, int key)
 
     while (HT->elem[addr] != NULLKEY) {     // 如果不为空，则冲突
         addr = (addr + 1) % m;              // 开放定址法的线性探测
-        HT->elem[addr] = key;               // 直到有空位后插入关键字
     }
+
+    HT->elem[addr] = key;                   // 直到有空位后插入关键字
 
     return OK;
 }
@@ -59,12 +61,14 @@ Status SearchHash(HashTable HT, int key, int* addr)
 {
     *addr = Hash(key);                      // 求散列地址
 
-    while (HT.elem[*addr] != key) {
+    while (HT.elem[*addr] != key) {         // 若HT.elem[*addr] == key，则说明查找成功，直接返回
         *addr = (*addr + 1) % m;            // 开放定址法的线性探测
 
-        // 如果循环回到原点，则说明关键字不存在，返回ERROR
+        // 如果查找到NULLKEY或循环回到原点，则说明关键字不存在，返回ERROR
         if (HT.elem[*addr] == NULLKEY || *addr == Hash(key)) {
-            return ERROR;
+            return FALSE;
         }
     }
+
+    return TRUE;
 }
