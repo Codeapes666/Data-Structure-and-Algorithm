@@ -18,12 +18,11 @@ typedef struct {
 // 稳定性：稳定
 void InsertSort(SeqList &L)
 {
-    int i = 0;
-    int j = 0;
-    for (i = 2; i <= L.length; ++i) {       // 依次将L.r[2]~L.r[L.length]插入到前面已排序序列
+    for (int i = 2; i <= L.length; ++i) {       // 依次将L.r[2]~L.r[L.length]插入到前面已排序序列
         if (L.r[i].key < L.r[i - 1].key) {  // 若L.r[i]的关键码小于其前驱，需将L.r[i]插入有序表
             L.r[0] = L.r[i];                // 复制为哨兵，L.r[0]不存放元素
             
+            int j = 0;
             // 从后往前查找待插入位置
             for (j = i - 1; L.r[0].key < L.r[j].key; --j) {
                 L.r[j + 1] = L.r[j];        // 向后挪位
