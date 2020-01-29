@@ -20,7 +20,6 @@ typedef struct {
 // 稳定性：稳定
 void BubbleSort(SeqList &L)
 {
-    int i = 0;
     int m = L.length - 1;
     int flag = 1;               // flag用来标记某一趟排序是否发生交换
 
@@ -28,7 +27,7 @@ void BubbleSort(SeqList &L)
         // flag置为0，如果本趟排序没有发生交换，则不会执行下一趟排序
         flag = 0;
 
-        for (i = 1; i <= m; ++i) {
+        for (int i = 1; i <= m; ++i) {
             if (L.r[i].key > L.r[i + 1].key) {
                 // flag置为1，表示本趟排序发生交换
                 flag = 1;
