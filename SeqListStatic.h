@@ -74,8 +74,7 @@ int LocateElem(SeqList L, ElemType e)
 		return ERROR;
 	}
 
-	int i = 0;
-	for (i = 0; i < L.length; ++i) {
+	for (int i = 0; i < L.length; ++i) {
 		if (L.data[i] == e) {
 			return i + 1;					// 下表为i的元素等于e，返回其位序i+1
 		}
@@ -91,8 +90,7 @@ int PriorElem(SeqList L, ElemType cur_e, ElemType* pre_e)
         return ERROR;
     }
 
-    int i = 0;
-    for (i = 0; i < L.length; ++i) {
+    for (int i = 0; i < L.length; ++i) {
         // 当前元素cur_e不是第一个元素则有前驱
         if (i != 0 && (L.data[i] == cur_e)) {
             *pre_e = L.data[i - 1];
@@ -110,8 +108,7 @@ int NextElem(SeqList L, ElemType cur_e, ElemType* next_e)
         return ERROR;
     }
 
-    int i = 0;
-    for (i = 0; i < L.length; ++i) {
+    for (int i = 0; i < L.length; ++i) {
         // 当前元素cur_e不是最后一个元素则有后继
         if ((i != L.length - 1) && (L.data[i] == cur_e)) {
             *next_e = L.data[i + 1];
@@ -135,8 +132,7 @@ int ListInsert(SeqList* L, int i, ElemType e)
 		return ERROR;
 	}
 
-	int j = 0;
-	for (j = L->length; j >= i; --j) {	// 将第i个位置及之后的元素后移
+	for (int j = L->length; j >= i; --j) {	// 将第i个位置及之后的元素后移
 		L->data[j] = L->data[j - 1];			
 	}
 
@@ -173,8 +169,7 @@ int TraverseList(SeqList L)
 		return ERROR;
 	}
 
-	int i = 0;
-	for (i = 0; i < L.length; ++i) {
+	for (int i = 0; i < L.length; ++i) {
 		printf("data[%d] = %d\n", i, L.data[i]);
 	}
 
