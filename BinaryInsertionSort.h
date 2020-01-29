@@ -18,25 +18,19 @@ typedef struct {
 // 稳定性：稳定
 void BInserSort(SeqList &L)
 {
-    int i = 0;
-    int j = 0;
-    int low = 0;
-    int high = 0;
-    int mid = 0;
-
     // 依次将L.r[2]~L.r[L.length]插入到前面已排序序列
-    for (i = 2; i <= L.length; ++i) {
+    for (int i = 2; i <= L.length; ++i) {
         // 将L.r[i]暂存到L.r[0]
         L.r[0] = L.r[i]; 
 
         // 设置折半查找的范围       
-        low = 1;
-        high = i - 1;
+        int low = 1;
+        int high = i - 1;
 
         // 折半查询（默认递增有序）
         while (low <= high) {
             // 取中间点
-            mid = (low + high) / 2;
+            int mid = (low + high) / 2;
 
             if (L.r[0].key < L.r[mid].key) {
                 high = mid - 1;                 // 查找左半子表
@@ -45,7 +39,7 @@ void BInserSort(SeqList &L)
             }
         }
         
-        for (j = i - 1; j >= high + 1; --j) {
+        for (int j = i - 1; j >= high + 1; --j) {
             L.r[j + 1] = L.r[j];                // 统一后移元素，空出插入位置
         }
 
