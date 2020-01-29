@@ -15,11 +15,10 @@ typedef struct {
 // 向下调整堆
 void HeapAdjustDown(SeqList &L, int s, int m)
 {// 假设r[s+1...m]已经是堆，将r[s...m]调整为以r[s]为根的大根堆
-    int i = 0;
     L.r[0] = L.r[s];
 
     // 沿key较大的子结点向下筛选
-    for (i = 2 * s; i <= m; i *= 2) {
+    for (int i = 2 * s; i <= m; i *= 2) {
         if (i < m && L.r[i].key < L.r[i + 1].key) {
             // i为key较大的记录的下标
             ++i;
@@ -61,10 +60,9 @@ void HeapAdjustUp(SeqList &L, int m)
 // 初始建堆
 void CreatHeap(SeqList &L)
 {
-    int i = 0;
     int n = L.length;
 
-    for (i = n / 2; i > 0; --i) {
+    for (int i = n / 2; i > 0; --i) {
         HeapAdjustDown(L, i, n);
     }
 }
@@ -75,10 +73,9 @@ void CreatHeap(SeqList &L)
 // 稳定性：不稳定
 void HeapSort(SeqList &L)
 {
-    int i = 0;
     CreatHeap(L);
 
-    for (i = L.length; i > 1; --i) {
+    for (int i = L.length; i > 1; --i) {
         // 将堆顶记录和当前未经排序子序列L.r[1...i]中最后一个记录互换
         RedType temp = L.r[1];
         L.r[1] = L.r[i];
