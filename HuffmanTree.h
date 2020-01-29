@@ -66,14 +66,11 @@ void Select(HuffmanTree HT, int end, int &s1, int &s2)
 // HT为地址传递的存储哈夫曼树的数组，w为存储结点权重值的数组，n为结点个数
 void CreateHuffmanTree(HuffmanTree &HT, int &w, int n)
 {   
-    int i = 0;
-    int m = 0;
-
     if (n <= 1) {                   // 如果只有一个编码就相当于0
         return;
     }
 
-    m = 2*n - 1;                    // m为哈夫曼总结点数，n为叶结点数
+    int m = 2*n - 1;                // m为哈夫曼总结点数，n为叶结点数
 
     // 0号单元未用，所以需要动态分配m+1个单元，HT[m]表示根结点
     HT = (HTNode*)malloc(sizeof(HTNode) * (m + 1));     
@@ -81,14 +78,14 @@ void CreateHuffmanTree(HuffmanTree &HT, int &w, int n)
         return;
     }
 
-    for (i = 1; i <= n; ++i) {      // 初始化哈夫曼树中的所有结点
+    for (int i = 1; i <= n; ++i) {      // 初始化哈夫曼树中的所有结点
         HT[i].weight = w + i - 1;
         HT[i].parent = 0;
         HT[i].lchild = 0;
         HT[i].rchild = 0;
     }
 
-    for (i = n + 1; i <= m; ++i) {  // 从数组的下标n+1开始初始化哈夫曼树中除叶子结点外的结点
+    for (int i = n + 1; i <= m; ++i) {  // 从数组的下标n+1开始初始化哈夫曼树中除叶子结点外的结点
         HT[i].weight = 0;
         HT[i].lchild = 0;
         HT[i].rchild = 0;
@@ -97,7 +94,7 @@ void CreateHuffmanTree(HuffmanTree &HT, int &w, int n)
     
     /*---------- 初始化工作结束，下面开始创建哈夫曼树 ----------*/
 
-    for (i = n + 1; i <= m; ++i) {  // 通过n-1次的选择、删除、合并来创建哈夫曼树
+    for (int i = n + 1; i <= m; ++i) {  // 通过n-1次的选择、删除、合并来创建哈夫曼树
         int s1 = 0;
         int s2 = 0;
 
@@ -127,8 +124,8 @@ void CreateHuffmanCode(HuffmanTree HT, HuffmanCode &HC, int n)
     HC = (HuffmanCode)malloc(sizeof(char *) * (n + 1));         // 分配存储n个字符编码的编码表空间
     char* cd = (char*)malloc(sizeof(char) * n);                 // 分配临时存放每个字符编码的动态数组空间
     cd[n - 1] = '\0';                                           // 编码结束符
-    int i = 0;                  
-    for (i = 1; i <= n; ++i) {                                  
+                 
+    for (int i = 1; i <= n; ++i) {                                  
         // 从叶子结点出发，得到的哈夫曼编码是逆序的，需要在字符串数组中逆序存放
         int start = n - 1;                                      // start开始时指向最后，即编码结束符位置
         int c = i;                                              // 当前结点在数组中的位置
