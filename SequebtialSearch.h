@@ -19,7 +19,7 @@ int SeqSearch(SSTable ST, KeyType key)
     ST.elem[0].key = key;                                   // 哨兵
 
     int i = 0;
-    for (i = ST.length; ST.elem[i].key != key; --i);        // 从后往前找
+    for (int i = ST.length; ST.elem[i].key != key; --i);        // 从后往前找
 
     return i;
 }
