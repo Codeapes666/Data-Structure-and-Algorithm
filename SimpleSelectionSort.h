@@ -18,12 +18,9 @@ typedef struct {
 // 稳定性：不稳定
 void SelectSort(SeqList &L)
 {
-    int i = 0;
-    int j = 0;
-    int min = 0;
-    for (i = 1; i < L.length; ++i) {            // 一共进行L.length - 1趟
-        min = i;                                // 记录最小元素位置
-        for (j = i + 1; j < L.length; ++j) {
+    for (int i = 1; i < L.length; ++i) {            // 一共进行L.length - 1趟
+        int min = i;                                // 记录最小元素位置
+        for (int j = i + 1; j < L.length; ++j) {
             if (L.r[j].key < L.r[min].key) {
                 min = j;                        // min指向此趟排序中关键字最小的记录
             }
