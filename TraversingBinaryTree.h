@@ -196,6 +196,22 @@ Status CreateBiTree(BiTree &T)
     return OK;
 }
 
+// 销毁二叉树
+Status DestroyBiTree(BiTree &T)
+{
+    if (root == NULL) {
+        return ERROR;
+    }
+
+    DestroyBiTree(T->lchild);
+    DestroyBiTree(T->rchild);
+
+    free(T);
+    T = NULL;
+
+    return OK;        
+}
+
 // 复制二叉树
 Status CopyBiTree(BiTree T, BiTree &NewT)
 {   // 复制一棵和T完全相同的二叉树
