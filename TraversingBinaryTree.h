@@ -4,13 +4,13 @@
 // 3.叶子结点数为n0，度为2的结点数为n2，n0 = n2 + 1
 // 4.高度为h的二叉树至多有2^(h)-1个结点（h >= 1)
 // 5.具有n个结点的完全二叉树的深度为⌊log2n⌋+1
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define OK          1
 #define ERROR       0
-#define TRUE        1
-#define FALSE       0
 #define OVERFLOW   -1
 
 typedef char TElemType;
@@ -43,6 +43,8 @@ Status InitStack(LinkStack &S)
     }
  
     S->next = NULL ;
+
+    return OK;
 }
 
 // 入栈
@@ -78,13 +80,13 @@ Status Pop(LinkStack &S, StackElemType &e)
 }
  
 // 判空
-Status StackEmpty(LinkStack &S)
+bool StackEmpty(LinkStack &S)
 {
     if(S->next == NULL) {
-        return TRUE;
+        return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 /**************************队列方法**************************/
@@ -119,13 +121,13 @@ Status InitQueue(LinkQueue &Q)  // 构造一个只有一个头结点的空队
 }
 
 // 判空
-Status QueueEmpty(LinkQueue Q)
+bool QueueEmpty(LinkQueue Q)
 {
     if (Q.front->next == NULL) {
-        return TRUE;
+        return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 // 入队
@@ -172,23 +174,23 @@ Status DeQueue(LinkQueue &Q, QueueElemType &e)
 // 构造二叉树
 Status CreateBiTree(BiTree &T)
 {
-    char ch;
+    char ch = '0';
 
     scanf("%c", &ch);
 
-    if (ch == '#') {                    // ch是一个“#”字符，表明该二叉树为空树
+    if (ch == '#') {                            // ch是一个“#”字符，表明该二叉树为空树
         T = NULL;
     } else {
         T = (BiTNode*)malloc(sizeof(BiTNode));  // 生成根结点
 
-        if (T == NULL) {                // 根结点内存分配失败
+        if (T == NULL) {                        // 根结点内存分配失败
             exit(OVERFLOW);
         }
 
-        T->data = ch;                   // 根结点数据域置为ch
+        T->data = ch;                           // 根结点数据域置为ch
 
-        CreateBiTree(T->lchild);        // 递归创建左子树
-        CreateBiTree(T->rchild);        // 递归创建右子树
+        CreateBiTree(T->lchild);                // 递归创建左子树
+        CreateBiTree(T->rchild);                // 递归创建右子树
     }
     
     return OK;
@@ -204,13 +206,13 @@ Status CopyBiTree(BiTree T, BiTree &NewT)
 
     NewT = (BiTNode*)malloc(sizeof(BiTNode));   // 生成一个新结点
 
-    if (NewT == NULL) {                     // 如果结点内存分配失败
+    if (NewT == NULL) {                         // 如果结点内存分配失败
         exit(OVERFLOW);
     }
 
-    NewT->data = T->data;                   // 复制根结点
-    CopyBiTree(T->lchild, NewT->lchild);    // 递归复制左子树
-    CopyBiTree(T->rchild, NewT->rchild);    // 递归复制右子树
+    NewT->data = T->data;                       // 复制根结点
+    CopyBiTree(T->lchild, NewT->lchild);        // 递归复制左子树
+    CopyBiTree(T->rchild, NewT->rchild);        // 递归复制右子树
     
     return OK;
 }
@@ -219,13 +221,13 @@ Status CopyBiTree(BiTree T, BiTree &NewT)
 int BiTreeDepth(BiTree T)
 {
     if (T == NULL) {
-        return ERROR;                       // 如果是空树，深度为0，递归结束
+        return ERROR;                           // 如果是空树，深度为0，递归结束
     } 
 
-    int m = BiTreeDepth(T->lchild);         // 递归计算左子树的深度记为m
-    int n = BiTreeDepth(T->rchild);         // 递归计算左子树的深度记为n
+    int m = BiTreeDepth(T->lchild);             // 递归计算左子树的深度记为m
+    int n = BiTreeDepth(T->rchild);             // 递归计算左子树的深度记为n
 
-    if (m > n) {                            // 二叉树的深度为m与n的较大者加1
+    if (m > n) {                                // 二叉树的深度为m与n的较大者加1
         return (m + 1);                                            
     } else {
         return (n + 1);
@@ -236,7 +238,7 @@ int BiTreeDepth(BiTree T)
 // 统计二叉树中结点的个数
 int NodeCount(BiTree T)
 {
-    if (T == NULL) {                // 如果是空树，则结点个数为0，递归结束
+    if (T == NULL) {                            // 如果是空树，则结点个数为0，递归结束
         return ERROR;
     } 
 
@@ -274,17 +276,17 @@ void InOrderTraverse(BiTree T)
 // 需要借助一个栈
 void InOrderTraverseNonRecursion(BiTree T)
 {   LinkStack S = NULL;
-    InitStack(S);                       // 初始化栈
-    BiTree p = T;                       // p是遍历指针
+    InitStack(S);                               // 初始化栈
+    BiTree p = T;                               // p是遍历指针
     
-    while (p || !StackEmpty(S)) {       // 栈不空或p不空时循环
-        if (p != NULL) {                // 根指针进栈，遍历左子树
+    while (p != NULL || !StackEmpty(S)) {       // 栈不空或p不空时循环
+        if (p != NULL) {                        // 根指针进栈，遍历左子树
             Push(S, p);
-            p = p->lchild;              // 每遇到非空二叉树先向左走
+            p = p->lchild;                      // 每遇到非空二叉树先向左走
         } else {                        
-            Pop(S, p);                  // 退栈
-            Visit(p);                   // 访问根结点
-            p = p->rchild;              // 再向右子树走
+            Pop(S, p);                          // 退栈
+            Visit(p);                           // 访问根结点
+            p = p->rchild;                      // 再向右子树走
         }
     }
 }
