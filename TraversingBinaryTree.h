@@ -34,21 +34,21 @@ typedef struct StackNode{
 }StackNode, *LinkStack;
 
 //栈的初始化
-Status InitStack(LinkStack &S)
+Status InitStack(LinkStack* S)
 {   // 生成新结点作为头结点
-    S = (StackNode*)malloc(sizeof(StackNode));
+    *S = (StackNode*)malloc(sizeof(StackNode));
     
-    if(S == NULL) {             // 内存分配失败
+    if(*S == NULL) {             // 内存分配失败
         exit(OVERFLOW);
     }
  
-    S->next = NULL ;
+    (*S)->next = NULL;
 
     return OK;
 }
 
 // 入栈
-Status Push(LinkStack &S, StackElemType e)
+Status Push(LinkStack* S, StackElemType e)
 {   // 生成新结点
     LinkStack q = (StackNode*)malloc(sizeof(StackNode));
     
@@ -58,21 +58,21 @@ Status Push(LinkStack &S, StackElemType e)
     
     // 前插法
     q->data = e ;
-    q->next = S->next ;
-    S->next = q ;
+    q->next = (*S)->next ;
+    (*S)->next = q ;
 
     return OK;
 }
 
 // 出栈
-Status Pop(LinkStack &S, StackElemType &e)
+Status Pop(LinkStack* S, StackElemType* e)
 {
     LinkStack  q = NULL;
 
-    if(S->next != NULL) {
-        q = S->next ;
-        e = q->data ;
-        S->next = q->next ;
+    if((*S)->next != NULL) {
+        q = (*S)->next;
+        *e = q->data;
+        (*S)->next = q->next;
         free(q) ;
     }
 
@@ -80,9 +80,9 @@ Status Pop(LinkStack &S, StackElemType &e)
 }
  
 // 判空
-bool StackEmpty(LinkStack &S)
+bool StackEmpty(LinkStack* S)
 {
-    if(S->next == NULL) {
+    if((*S)->next == NULL) {
         return true;
     }
 
@@ -105,7 +105,7 @@ typedef struct {                // 链式队列
 }LinkQueue;
 
 // 链队的初始化
-Status InitQueue(LinkQueue &Q)  // 构造一个只有一个头结点的空队
+Status InitQueue(LinkQueue* Q)  // 构造一个只有一个头结点的空队
 {   // 生成新结点作为头结点
     QNode* p = (QNode*)malloc(sizeof(QNode));
 
@@ -113,9 +113,9 @@ Status InitQueue(LinkQueue &Q)  // 构造一个只有一个头结点的空队
         exit(OVERFLOW);
     }
 
-    Q.front = Q.rear = p;       // 队头和队尾指针指向此结点
+    Q->front = Q->rear = p;     // 队头和队尾指针指向此结点
 
-    Q.front->next = NULL;       // 头结点的指针域置空
+    Q->front->next = NULL;      // 头结点的指针域置空
 
     return OK;
 }
@@ -131,7 +131,7 @@ bool QueueEmpty(LinkQueue Q)
 }
 
 // 入队
-Status EnQueue(LinkQueue &Q, QueueElemType e)
+Status EnQueue(LinkQueue* Q, QueueElemType e)
 {   // 为入队元素分配结点空间，用指针p指向
     QNode* p = (QNode*)malloc(sizeof(QNode));
 
@@ -139,31 +139,31 @@ Status EnQueue(LinkQueue &Q, QueueElemType e)
     
     // 将新结点插入到队尾
     p->next = NULL;
-    Q.rear->next = p;
+    Q->rear->next = p;
 
-    Q.rear = p;                // 修改队尾指针                  
+    Q->rear = p;                // 修改队尾指针                  
 
     return OK;
 }
 
 // 出队
-Status DeQueue(LinkQueue &Q, QueueElemType &e)
+Status DeQueue(LinkQueue* Q, QueueElemType* e)
 {   // 删除Q的队头元素，用e返回其值
-    if (Q.front == Q.rear) {    // 若队列空，则返回ERROR
+    if (Q->front == Q->rear) {      // 若队列空，则返回ERROR
         return ERROR;
     }
 
     QueuePtr p = NULL;
 
-    p = Q.front->next;          // p指向队头元素
-    e = Q.front->data;          // e保存队头元素的值
-    Q.front->next = p->next;    // 修改头指针
+    p = Q->front->next;             // p指向队头元素
+    *e = Q->front->data;            // e保存队头元素的值
+    Q->front->next = p->next;       // 修改头指针
 
-    if(Q.rear == p) {           // 最后一个元素被删，队尾指针指向头结点
-        Q.rear = Q.front;
+    if(Q->rear == p) {              // 最后一个元素被删，队尾指针指向头结点
+        Q->rear = Q->front;
     }
 
-    delete p;                   // 释放原队头元素的空间
+    delete p;                       // 释放原队头元素的空间
     p = NULL;
 
     return OK;
@@ -172,63 +172,63 @@ Status DeQueue(LinkQueue &Q, QueueElemType &e)
 /**************************二叉树方法*************************/
 
 // 构造二叉树
-Status CreateBiTree(BiTree &T)
+Status CreateBiTree(BiTree* T)
 {
     char ch = '0';
 
     scanf("%c", &ch);
 
-    if (ch == '#') {                            // ch是一个“#”字符，表明该二叉树为空树
-        T = NULL;
+    if (ch == '#') {                                // ch是一个“#”字符，表明该二叉树为空树
+        *T = NULL;
     } else {
-        T = (BiTNode*)malloc(sizeof(BiTNode));  // 生成根结点
+        *T = (BiTNode*)malloc(sizeof(BiTNode));     // 生成根结点
 
-        if (T == NULL) {                        // 根结点内存分配失败
+        if (*T == NULL) {                           // 根结点内存分配失败
             exit(OVERFLOW);
         }
 
-        T->data = ch;                           // 根结点数据域置为ch
+        (*T)->data = ch;                            // 根结点数据域置为ch
 
-        CreateBiTree(T->lchild);                // 递归创建左子树
-        CreateBiTree(T->rchild);                // 递归创建右子树
+        CreateBiTree(&((*T)->lchild));              // 递归创建左子树
+        CreateBiTree(&((*T)->rchild));              // 递归创建右子树
     }
     
     return OK;
 }
 
 // 销毁二叉树
-Status DestroyBiTree(BiTree &T)
+Status DestroyBiTree(BiTree* T)
 {
-    if (root == NULL) {
+    if (*T == NULL) {
         return ERROR;
     }
 
-    DestroyBiTree(T->lchild);
-    DestroyBiTree(T->rchild);
+    DestroyBiTree(&((*T)->lchild));
+    DestroyBiTree(&((*T)->rchild));
 
-    free(T);
-    T = NULL;
+    free(*T);
+    *T = NULL;
 
     return OK;        
 }
 
 // 复制二叉树
-Status CopyBiTree(BiTree T, BiTree &NewT)
+Status CopyBiTree(BiTree T, BiTree* NewT)
 {   // 复制一棵和T完全相同的二叉树
-    if (T == NULL) {                            // 如果是空树，递归结束
-        NewT = NULL;
+    if (T == NULL) {                                // 如果是空树，递归结束
+        *NewT = NULL;
         return ERROR;
     } 
 
-    NewT = (BiTNode*)malloc(sizeof(BiTNode));   // 生成一个新结点
+    *NewT = (BiTNode*)malloc(sizeof(BiTNode));      // 生成一个新结点
 
-    if (NewT == NULL) {                         // 如果结点内存分配失败
+    if (*NewT == NULL) {                            // 如果结点内存分配失败
         exit(OVERFLOW);
     }
 
-    NewT->data = T->data;                       // 复制根结点
-    CopyBiTree(T->lchild, NewT->lchild);        // 递归复制左子树
-    CopyBiTree(T->rchild, NewT->rchild);        // 递归复制右子树
+    (*NewT)->data = T->data;                        // 复制根结点
+    CopyBiTree(T->lchild, &((*NewT)->lchild));      // 递归复制左子树
+    CopyBiTree(T->rchild, &((*NewT)->rchild));      // 递归复制右子树
     
     return OK;
 }
@@ -292,15 +292,15 @@ void InOrderTraverse(BiTree T)
 // 需要借助一个栈
 void InOrderTraverseNonRecursion(BiTree T)
 {   LinkStack S = NULL;
-    InitStack(S);                               // 初始化栈
+    InitStack(&S);                              // 初始化栈
     BiTree p = T;                               // p是遍历指针
     
-    while (p != NULL || !StackEmpty(S)) {       // 栈不空或p不空时循环
+    while (p != NULL || !StackEmpty(&S)) {      // 栈不空或p不空时循环
         if (p != NULL) {                        // 根指针进栈，遍历左子树
-            Push(S, p);
+            Push(&S, p);
             p = p->lchild;                      // 每遇到非空二叉树先向左走
         } else {                        
-            Pop(S, p);                          // 退栈
+            Pop(&S, &p);                        // 退栈
             Visit(p);                           // 访问根结点
             p = p->rchild;                      // 再向右子树走
         }
@@ -322,18 +322,18 @@ void PostOrderTraverse(BiTree T)
 void LevelOrderTraverse(BiTree T)
 {   
     LinkQueue Q;
-    InitQueue(Q);                       // 初始化辅助队列
+    InitQueue(&Q);                      // 初始化辅助队列
     BiTree p = NULL;
-    EnQueue(Q, T);                      // 根结点入队
+    EnQueue(&Q, T);                     // 根结点入队
 
     while (!QueueEmpty(Q)) {            // 队列不空则循环
-        DeQueue(Q, p);                  // 队头元素出队
+        DeQueue(&Q, &p);                // 队头元素出队
         Visit(p);                       // 访问当前p所指向结点
         if (p->lchild != NULL) {        // 左子树不空，则左子树入队列
-            EnQueue(Q, p->rchild);
+            EnQueue(&Q, p->rchild);
         }
         if (p->rchild != NULL) {        // 右子树不空，则右子树入队列
-            EnQueue(Q, p->rchild);
+            EnQueue(&Q, p->rchild);
         }
     }
 }
