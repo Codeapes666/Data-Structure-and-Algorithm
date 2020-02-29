@@ -53,40 +53,40 @@ BSTree BSTSearchNonRecursion(BSTree T, KeyType key)
 }
 
 // 二叉排序树的插入
-Status InsertBST(BSTree &T, ElemType e)
+Status InsertBST(BSTree* T, ElemType e)
 {   // 当二叉树T中不存在关键字等于e.key的数据元素时，则插入该元素
-    if (T == NULL) {                            // 原树为空，新插入的记录为根结点
-        T = (BSTree)malloc(sizeof(BSTNode));    
-        T->data = e;                           
-        T->lchild = T->rchild = NULL;           
+    if (*T == NULL) {                               // 原树为空，新插入的记录为根结点
+        *T = (BSTree)malloc(sizeof(BSTNode));    
+        (*T)->data = e;                           
+        (*T)->lchild = (*T)->rchild = NULL;           
         return OK;                      
-    } else if (T->data.key > e.key) {           // 插入到T的左子树中
-        InsertBST(T->lchild, e);
-    } else if (T->data.key < e.key) {           // 插入到T的右子树中
-        InsertBST(T->rchild, e);
-    } else {                                    // 树中存在相同关键字的结点
+    } else if ((*T)->data.key > e.key) {            // 插入到T的左子树中
+        InsertBST(&((*T)->lchild), e);
+    } else if ((*T)->data.key < e.key) {            // 插入到T的右子树中
+        InsertBST(&((*T)->rchild), e);
+    } else {                                        // 树中存在相同关键字的结点
         return ERROR;
     }
 }
 
 // 二叉排序树的创建
-Status CreatBST(BSTree &T)
+Status CreatBST(BSTree* T)
 {
-    T = NULL;                                   // 将二叉排序树T初始化为空树
+    *T = NULL;                                      // 将二叉排序树T初始化为空树
     ElemType e;
     while (scanf("%d", &e.key) != EOF) {
-        InsertBST(T, e);                        // 将此结点插入二叉排序树T中
+        InsertBST(T, e);                            // 将此结点插入二叉排序树T中
     }
 
     return OK;
 }
 
 // 二叉排序树的删除
-Status DeleteBST(BSTree &T, KeyType key) 
+Status DeleteBST(BSTree* T, KeyType key) 
 {   // 从二叉排序树T中删除关键字等于key的结点
-    BSTree p = T;                           // 指针p指向待待删结点
+    BSTree p = *T;                                  // 指针p指向待待删结点
     BSTree q = NULL;
-    BSTree f = NULL;                        // 指针f为p的双亲结点
+    BSTree f = NULL;                                // 指针f为p的双亲结点
 
     /*------------ 下面的while循环从根开始查找关键字等于key的结点*p ------------*/
     while (p != NULL) {
@@ -138,7 +138,7 @@ Status DeleteBST(BSTree &T, KeyType key)
 
     /*-------- 将p所指的子树挂接到其双亲结点*f相应的位置 --------*/
     if (f == NULL) {                        // 被删除结点为根结点
-        T = p;
+        *T = p;
     } else if (f->lchild == q) {            // 挂接到*f的左子树位置
         f->lchild = p;
     } else {                                // 挂接到*f的右子树位置
