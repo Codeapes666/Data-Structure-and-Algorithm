@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define OK          1
 #define ERROR       0
-#define TRUE        1
-#define FALSE       0
 #define OVERFLOW   -1
 
 typedef int ElemType;
@@ -18,21 +17,21 @@ typedef struct StackNode{
 
 // 栈的初始化
 // 这里规定链栈没有头结点
-Status InitStack(LinkStack &S)
+Status InitStack(LinkStack* S)
 {   // 构造一个空栈S，栈顶指针置空
-    S = NULL;
+    *S = NULL;
 
     return OK;
 }
 
 // 销毁栈
-Status DestoryStack(LinkStack &S)
+Status DestoryStack(LinkStack* S)
 {
     LinkStack p = NULL;
 
-    while (S != NULL) {
-        p = S;
-        S = S->next;
+    while (*S != NULL) {
+        p = *S;
+        *S = (*S)->next;
         free(p);
     }
 
@@ -41,13 +40,13 @@ Status DestoryStack(LinkStack &S)
 
 // 清空栈
 // 不带头结点的链栈，销毁和清空实现相同
-Status ClearStack(LinkStack &S)
+Status ClearStack(LinkStack* S)
 {
     LinkStack p = NULL;
 
-    while (S != NULL) {
-        p = S;
-        S = S->next;
+    while (*S != NULL) {
+        p = *S;
+        *S = (*S)->next;
         free(p);
     }
 
@@ -55,13 +54,13 @@ Status ClearStack(LinkStack &S)
 }
 
 // 判空
-Status StackEmpty(LinkStack S)
+bool StackEmpty(LinkStack S)
 {
     if (S == NULL) {
-        return TRUE;
+        return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 // 求栈长度
@@ -86,7 +85,7 @@ ElemType GetTop(LinkStack S)
 }
 
 // 入栈
-Status Push(LinkStack &S, ElemType e)
+Status Push(LinkStack* S, ElemType e)
 {   // 生成新结点
     LinkStack p = (StackNode*)malloc(sizeof(StackNode));
     if (p == NULL) {    // 若内存分配失败
@@ -94,26 +93,26 @@ Status Push(LinkStack &S, ElemType e)
     }
 
     p->data = e;        // 将新结点数据域置为e
-    p->next = S;        // 将新结点插入栈顶
-    S = p;              // 修改栈顶指针为p
+    p->next = *S;       // 将新结点插入栈顶
+    *S = p;             // 修改栈顶指针为p
 
     return OK;
 }
 
 // 出栈
-Status Pop(LinkStack &S, ElemType &e)
+Status Pop(LinkStack* S, ElemType* e)
 {   // 栈空
-    if (S == NULL) {
+    if (*S == NULL) {
         return ERROR;
     }
 
-    e = S->data;        // 将栈顶元素赋给e
+    *e = (*S)->data;        // 将栈顶元素赋给e
 
-    LinkStack p = S;    // 用p临时保存栈顶元素空间，以备释放
-    S = S->next;        // 修改栈顶指针
+    LinkStack p = *S;       // 用p临时保存栈顶元素空间，以备释放
+    *S = (*S)->next;        // 修改栈顶指针
 
-    free(p);            // 释放原栈顶元素的空间
-    p = NULL;           // 指针置空
+    free(p);                // 释放原栈顶元素的空间
+    p = NULL;               // 指针置空
 
     return OK;
 }
