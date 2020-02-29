@@ -39,10 +39,10 @@ DLNode* GetElem_DL(DLinkList L, int i)
 
 // 插入操作
 // 在带头结点的双向链表L中第i个位置之前插入元素e
-int ListInsert_DL(DLinkList &L, int i, ElemType e)
+int ListInsert_DL(DLinkList* L, int i, ElemType e)
 {
     DLinkList p = NULL;
-    if (!(p = GetElem_DL(L, i))) {              // 在L中确定第i个元素的位置指针p
+    if ((p = GetElem_DL(*L, i)) == NULL) {      // 在L中确定第i个元素的位置指针p
         return ERROR;                           // p为NULL时，第i个元素不存在
     }
 
