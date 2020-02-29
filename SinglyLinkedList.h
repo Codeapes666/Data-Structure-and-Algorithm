@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define OK 1
 #define ERROR 0
@@ -30,16 +31,16 @@ LinkList InitList(LinkList* L)
 }
 
 // 前插法创建单链表
-LinkList CreatList_H(LinkList &L)
+LinkList CreatList_H(LinkList* L)
 {
     // 从表尾到表头逆向建立单链表L，每次均在头结点之后插入元素
-    L = (LinkList)malloc(sizeof(LNode));            // 创建头结点
+    *L = (LinkList)malloc(sizeof(LNode));           // 创建头结点
 
     if (L == NULL) {
         return;
     }
 
-    L ->next = NULL;                                // 初始化为空链表
+    (*L)->next = NULL;                              // 初始化为空链表
 
     LNode* p = NULL;
     int x = 0;
@@ -52,27 +53,27 @@ LinkList CreatList_H(LinkList &L)
         }
 
         p->data = x;                                // 输入元素值赋给新结点*p的数据域
-        p->next = L->next;
-        L->next = p;
+        p->next = (*L)->next;
+        (*L)->next = p;
     }
 
-    return L;
+    return *L;
 }
 
 // 后插法创建单链表
-LinkList CreatList_R(LinkList &L)
+LinkList CreatList_R(LinkList* L)
 {
     // 从表头到表尾正向建立单链表L，每次均在表尾插入元素
-    L = (LinkList)malloc(sizeof(LNode));            // 创建头结点
+    *L = (LinkList)malloc(sizeof(LNode));            // 创建头结点
 
     if (L == NULL) {
         return;
     }
 
-    L ->next = NULL;                                // 初始化为空链表
+    (*L)->next = NULL;                               // 初始化为空链表
 
     LNode* p = NULL;
-    LNode* r = L;
+    LNode* r = *L;
     int x = 0;
     while (scanf("%d", &x) != EOF) {
         p = (LNode*)malloc(sizeof(LNode));          // 生成新结点
@@ -87,7 +88,7 @@ LinkList CreatList_R(LinkList &L)
     }
     
     r->next = NULL;                                 // 尾结点指针置空
-    return L;
+    return *L;
 }
 
 // 求单链表的长度
@@ -106,7 +107,7 @@ int Length(LinkList L)
 
 // 按序查找
 // 在带头结点的单链表L中根据序号i获取元素的值，用e返回L中第i个数据元素的值
-int GetElem(LinkList L, int i ,ElemType &e) 
+int GetElem(LinkList L, int i ,ElemType* e) 
 {
     LinkList p = L->next;                           // 初始化，p指向首原结点
     int j = 1;                                      // 计数器j初值赋为1
@@ -121,7 +122,7 @@ int GetElem(LinkList L, int i ,ElemType &e)
         return ERROR;
     }
 
-    e = p->data;                                    // 取第i个结点的数据域
+    *e = p->data;                                   // 取第i个结点的数据域
     return OK;
 }
 
@@ -142,9 +143,9 @@ LinkList LocateElem(LinkList L, ElemType e)
 
 // 插入操作
 // 在带头结点的单链表L中第i个位置插入值为e的新结点
-int ListInsert(LinkList &L, int i, ElemType e)
+int ListInsert(LinkList* L, int i, ElemType e)
 {
-    LinkList p = L;
+    LinkList p = *L;
     int j = 0;
 
     // 查找第i-1个结点，p指向该结点
@@ -153,7 +154,7 @@ int ListInsert(LinkList &L, int i, ElemType e)
         ++j;
     }
 
-    if (!p || j > i - 1) {
+    if (p == NULL || j > i - 1) {
         return ERROR;
     }
 
@@ -175,18 +176,18 @@ int ListInsert(LinkList &L, int i, ElemType e)
 
 // 删除操作
 // 在带头结点的单链表L中，删除第i个元素
-int ListDelete(LinkList &L, int i)
+int ListDelete(LinkList* L, int i)
 {
-    LinkList p = L;
+    LinkList p = *L;
     int j = 0;
 
     // 查找第i-1个结点，p指向该结点
-    while ((p->next) && (j < i -1)) {
+    while ((p->next != NULL) && (j < i -1)) {
         p = p->next;
         ++j;
     }
 
-    if (!(p->next) || (j > i - 1)) {
+    if ((p->next == NULL) || (j > i - 1)) {
         return ERROR;
     }
 
@@ -199,14 +200,14 @@ int ListDelete(LinkList &L, int i)
 }
 
 // 判空操作
-int Empty(LinkList L)
+bool Empty(LinkList L)
 {
     // 若头结点指向的下一个结点是NULL，则链表为空
 	if (L->next == NULL) {
-		return OK;
+		return true;
 	}
 
-	return ERROR;
+	return false;
 }
 
 // 遍历操作
