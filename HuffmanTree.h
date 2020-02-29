@@ -12,7 +12,7 @@ typedef struct {
 
 // 哈夫曼树中的查找
 // HT数组中存放的哈夫曼树，end表示HT数组中存放结点的最终位置，s1和s2传递的是HT数组中权重值最小的两个结点在数组中的位置
-void Select(HuffmanTree HT, int end, int &s1, int &s2)
+void Select(HuffmanTree HT, int end, int* s1, int* s2)
 {
     int min1 = 0;
     int min2 = 0;
@@ -24,7 +24,7 @@ void Select(HuffmanTree HT, int end, int &s1, int &s2)
     }
 
     min1 = HT[i].weight;
-    s1 = i;
+    *s1 = i;
 
     i++;
     while (HT[i].parent != 0 && i <= end) {
@@ -36,10 +36,10 @@ void Select(HuffmanTree HT, int end, int &s1, int &s2)
         min2 = min1;
         s2 = s1;
         min1 = HT[i].weight;
-        s1 = i;
+        *s1 = i;
     } else {
         min2 = HT[i].weight;
-        s2 = i;
+        *s2 = i;
     }
     // 两个结点和后续的所有未构建成树的结点做比较
     for (int j = i + 1; j <= end; ++j) {
@@ -53,11 +53,11 @@ void Select(HuffmanTree HT, int end, int &s1, int &s2)
             min2 = min1;
             min1 = HT[j].weight;
             s2 = s1;
-            s1 = j;
+            *s1 = j;
         } else if (HT[j].weight >= min1 && HT[j].weight < min2) {
             // 如果介于两者之间，min2赋值为新的结点的位置下标
             min2 = HT[j].weight;
-            s2 = j;
+            *s2 = j;
         }
     }
 }
@@ -99,7 +99,7 @@ void CreateHuffmanTree(HuffmanTree &HT, int &w, int n)
         int s2 = 0;
 
         // 在HT[k]（1 ≤ k ≤ i-1）中选择两个其双亲域为0且权值最小的结点，并返回它们在HT中的序号s1和s2
-        Select(HT, i - 1, s1, s2);
+        Select(HT, i - 1, &s1, &s2);
 
         // 得到新结点i，从森林中删除s1、s2，将s1和s2的双亲域由0改为i
         HT[s1].parent = i;
@@ -119,9 +119,9 @@ void CreateHuffmanTree(HuffmanTree &HT, int &w, int n)
 typedef char **HuffmanCode;         // 动态分配数组存储哈夫曼编码表
 
 // 求哈夫曼编码
-void CreateHuffmanCode(HuffmanTree HT, HuffmanCode &HC, int n)
+void CreateHuffmanCode(HuffmanTree HT, HuffmanCode* HC, int n)
 {   // 从叶子到根逆向求每个字符的哈弗曼编码，存储在编码表HC中
-    HC = (HuffmanCode)malloc(sizeof(char *) * (n + 1));         // 分配存储n个字符编码的编码表空间
+    *HC = (HuffmanCode)malloc(sizeof(char *) * (n + 1));        // 分配存储n个字符编码的编码表空间
     char* cd = (char*)malloc(sizeof(char) * n);                 // 分配临时存放每个字符编码的动态数组空间
     cd[n - 1] = '\0';                                           // 编码结束符
                  
@@ -144,9 +144,10 @@ void CreateHuffmanCode(HuffmanTree HT, HuffmanCode &HC, int n)
         }
 
         // 跳出循环后，cd数组中从下标start开始，存放的就是该结点的哈夫曼编码
-        HC[i] = (char*)malloc(sizeof(char) * (n - start));      // 为第i个字符编码分配空间
-        strcpy(HC[i], &cd[start]);                              // 将求得的编码从临时空间cd复制到HC的当前行中
+        *HC[i] = (char*)malloc(sizeof(char) * (n - start));      // 为第i个字符编码分配空间
+        strcpy(*HC[i], &cd[start]);                              // 将求得的编码从临时空间cd复制到HC的当前行中
     }
 
     free(cd);                                                   // 释放临时空间
+    cd = NULL;
 }
