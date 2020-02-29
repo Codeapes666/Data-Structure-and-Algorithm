@@ -16,21 +16,21 @@ typedef struct {
 // 时间复杂度：O(n²)
 // 空间复杂度：O(1)
 // 稳定性：不稳定
-void SelectSort(SeqList &L)
+void SelectSort(SeqList* L)
 {
-    for (int i = 1; i < L.length; ++i) {            // 一共进行L.length - 1趟
+    for (int i = 1; i < L->length; ++i) {           // 一共进行L.length - 1趟
         int min = i;                                // 记录最小元素位置
-        for (int j = i + 1; j < L.length; ++j) {
-            if (L.r[j].key < L.r[min].key) {
-                min = j;                        // min指向此趟排序中关键字最小的记录
+        for (int j = i + 1; j < L->length; ++j) {
+            if (L->r[j].key < L->r[min].key) {
+                min = j;                            // min指向此趟排序中关键字最小的记录
             }
         }
 
         if (min != i) {
             // 交换r[i]与r[k]
-            RedType temp = L.r[i];
-            L.r[i] = L.r[min];
-            L.r[min] = temp;
+            RedType temp = L->r[i];
+            L->r[i] = L->r[min];
+            L->r[min] = temp;
         }
     }
 }
