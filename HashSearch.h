@@ -1,9 +1,8 @@
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define OK          1
 #define ERROR       0
-#define TRUE        1
-#define FALSE       0
 #define OVERFLOW   -1
 
 typedef int Status;
@@ -57,7 +56,7 @@ Status InsertHash(HashTable* HT, int key)
 }
 
 // 散列表的查找
-Status SearchHash(HashTable HT, int key, int* addr)
+bool SearchHash(HashTable HT, int key, int* addr)
 {
     *addr = Hash(key);                      // 求散列地址
 
@@ -66,9 +65,9 @@ Status SearchHash(HashTable HT, int key, int* addr)
 
         // 如果查找到NULLKEY或循环回到原点，则说明关键字不存在，返回FALSE
         if (HT.elem[*addr] == NULLKEY || *addr == Hash(key)) {
-            return FALSE;
+            return false;
         }
     }
 
-    return TRUE;
+    return true;
 }
