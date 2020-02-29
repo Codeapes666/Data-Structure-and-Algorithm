@@ -18,9 +18,9 @@ typedef struct {
 // 平均时间复杂度：O(n²)
 // 空间复杂度：O(1)
 // 稳定性：稳定
-void BubbleSort(SeqList &L)
+void BubbleSort(SeqList* L)
 {
-    int m = L.length - 1;
+    int m = L->length - 1;
     int flag = 1;               // flag用来标记某一趟排序是否发生交换
 
     while (m > 0 && flag == 1) {
@@ -28,14 +28,14 @@ void BubbleSort(SeqList &L)
         flag = 0;
 
         for (int i = 1; i <= m; ++i) {
-            if (L.r[i].key > L.r[i + 1].key) {
+            if (L->r[i].key > L->r[i + 1].key) {
                 // flag置为1，表示本趟排序发生交换
                 flag = 1;
 
                 // 交换前后两个记录
-                RedType temp = L.r[i];
-                L.r[i] = L.r[i + 1];
-                L.r[i] = temp;
+                RedType temp = L->r[i];
+                L->r[i] = L->r[i + 1];
+                L->r[i] = temp;
             }
         }
         --m;
@@ -43,11 +43,11 @@ void BubbleSort(SeqList &L)
 }
 
 // 冒泡排序第2种方法
-void BubbleSort2(SeqList &L)
+void BubbleSort2(SeqList* L)
 {
     int i = 0;
     int j = 0;
-    int m = L.length - 1;
+    int m = L->length - 1;
     int flag = TRUE;               // flag用来标记某一趟排序是否发生交换
 
     for (i = 0; i < m; ++i) {
@@ -55,18 +55,18 @@ void BubbleSort2(SeqList &L)
         flag = FALSE;
 
         for (j = m; j > i; --j) {
-            if (L.r[j - 1].key > L.r[j].key) {
+            if (L->r[j - 1].key > L->r[j].key) {
                 // flag置为1，表示本趟排序发生交换
                 flag = TRUE;
 
                 // 交换前后两个记录
-                RedType temp = L.r[j - 1];
-                L.r[j - 1] = L.r[j];
-                L.r[j] = temp;
+                RedType temp = L->r[j - 1];
+                L->r[j - 1] = L->r[j];
+                L->r[j] = temp;
             }
         }
         if (flag == FALSE) {
-            return ;                // 本趟遍历后没有发生交换，说明表已经有序
+            return;                // 本趟遍历后没有发生交换，说明表已经有序
         }
     }
 }
