@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define OK          1
 #define ERROR       0
-#define TRUE        1
-#define FALSE       0
 #define OVERFLOW   -1
 
 typedef int ElemType;
@@ -22,7 +21,7 @@ typedef struct {                // 链式队列
 }LinkQueue;
 
 // 链队的初始化
-Status InitQueue(LinkQueue &Q)  // 构造一个只有一个头结点的空队
+Status InitQueue(LinkQueue* Q)  // 构造一个只有一个头结点的空队
 {   // 生成新结点作为头结点
     QNode* p = (QNode*)malloc(sizeof(QNode));
 
@@ -30,33 +29,33 @@ Status InitQueue(LinkQueue &Q)  // 构造一个只有一个头结点的空队
         exit(OVERFLOW);
     }
 
-    Q.front = Q.rear = p;       // 队头和队尾指针指向此结点
+    Q->front = Q->rear = p;     // 队头和队尾指针指向此结点
 
-    Q.front->next = NULL;       // 头结点的指针域置空
+    Q->front->next = NULL;      // 头结点的指针域置空
 
     return OK;
 }
 
 // 销毁链队
-Status DestroyQueue(LinkQueue &Q)
+Status DestroyQueue(LinkQueue* Q)
 {
-    while (Q.front != NULL) {
-        Q.rear = Q.front->next;
+    while (Q->front != NULL) {
+        Q->rear = Q->front->next;
 
-        free(Q.front);
-        Q.front = Q.rear;
+        free(Q->front);
+        Q->front = Q->rear;
     }
 
     return OK;
 }
 
 // 清空链队
-Status ClearQueue(LinkQueue &Q)
+Status ClearQueue(LinkQueue* Q)
 {
     QueuePtr q = NULL;
     QueuePtr p = NULL;
-    p = Q.front->next;
-    Q.front->next = NULL;
+    p = Q->front->next;
+    Q->front->next = NULL;
 
     while (p != NULL) {
         q = p->next;
@@ -64,19 +63,19 @@ Status ClearQueue(LinkQueue &Q)
         p = q;
     }
 
-    Q.rear = Q.front;
+    Q->rear = Q->front;
 
     return OK;
 }
 
 // 判空
-Status QueueEmpty(LinkQueue Q)
+bool QueueEmpty(LinkQueue Q)
 {
     if (Q.front->next == NULL) {
-        return TRUE;
+        return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 // 求链队长度
@@ -103,7 +102,7 @@ ElemType GetHead(LinkQueue Q)
 }
 
 // 入队
-Status EnQueue(LinkQueue &Q, ElemType e)
+Status EnQueue(LinkQueue* Q, ElemType e)
 {   // 为入队元素分配结点空间，用指针p指向
     QNode* p = (QNode*)malloc(sizeof(QNode));
 
@@ -111,31 +110,31 @@ Status EnQueue(LinkQueue &Q, ElemType e)
     
     // 将新结点插入到队尾
     p->next = NULL;
-    Q.rear->next = p;
+    Q->rear->next = p;
 
-    Q.rear = p;                // 修改队尾指针                  
+    Q->rear = p;                // 修改队尾指针                  
 
     return OK;
 }
 
 // 出队
-Status DeQueue(LinkQueue &Q, ElemType &e)
+Status DeQueue(LinkQueue* Q, ElemType* e)
 {   // 删除Q的队头元素，用e返回其值
-    if (Q.front == Q.rear) {    // 若队列空，则返回ERROR
+    if (Q->front == Q->rear) {      // 若队列空，则返回ERROR
         return ERROR;
     }
 
     QueuePtr p = NULL;
 
-    p = Q.front->next;          // p指向队头元素
-    e = Q.front->data;          // e保存队头元素的值
-    Q.front->next = p->next;    // 修改头指针
+    p = Q->front->next;             // p指向队头元素
+    *e = Q->front->data;            // e保存队头元素的值
+    Q->front->next = p->next;       // 修改头指针
 
-    if(Q.rear == p) {           // 最后一个元素被删，队尾指针指向头结点
-        Q.rear = Q.front;
+    if(Q->rear == p) {              // 最后一个元素被删，队尾指针指向头结点
+        Q->rear = Q->front;
     }
 
-    delete p;                   // 释放原队头元素的空间
+    delete p;                       // 释放原队头元素的空间
     p = NULL;
 
     return OK;
