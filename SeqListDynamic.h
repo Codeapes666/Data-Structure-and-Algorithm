@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define InitSize    100	    // 定义线性表的初始长度
+#define InitSize    100	        // 定义线性表的初始长度
 #define OK          1
 #define ERROR       0
 #define OVERFLOW   -1
@@ -10,10 +10,10 @@
 typedef int ElemType;
 
 typedef struct {
-    ElemType* data;		    // 动态分配数组的指针		
-    int MaxSize;	        // 线性表的最大容量
-    int length;             // 线性表的当前长度
-} SeqList;				    // 动态分配数组顺序表的类型定义
+    ElemType* data;		        // 动态分配数组的指针
+    int MaxSize;	            // 线性表的最大容量
+    int length;                 // 线性表的当前长度
+} SeqList;				        // 动态分配数组顺序表的类型定义
 
 // 初始化顺序表
 int InitList(SeqList* L)
@@ -63,7 +63,7 @@ int ClearList(SeqList* L)
 // 判空
 bool ListEmpty(SeqList L)
 {
-	if (L.length == 0) {        // 线性表为空返回TRUE
+	if (L.length == 0) {            // 线性表为空返回TRUE
 		return true;
 	}
 
@@ -102,7 +102,8 @@ int LocateElem(SeqList L, ElemType e)
 
 	for (int i = 0; i < L.length; ++i) {
 		if (L.data[i] == e) {
-			return i + 1;				// 下表为i的元素等于e，返回其位序i+1
+            // 下表为i的元素等于e，返回其位序i+1
+			return i + 1;
 		}
 	}
 
@@ -151,8 +152,9 @@ int NextElem(SeqList L, ElemType cur_e, ElemType* next_e)
 int ListInsert(SeqList* L, int i, ElemType e) 
 {
     SeqList* pList;
-
-    if (i < 1 || i > L->length + 1) {		// 判断i的范围是否有效
+    
+    // 判断i的范围是否有效
+    if (i < 1 || i > L->length + 1) {
 		return ERROR;
 	}
 
@@ -186,17 +188,20 @@ int ListInsert(SeqList* L, int i, ElemType e)
 // 删除成功返回OK，删除失败返回ERROR。如删除成功，用e返回删除元素的值
 int ListDelete(SeqList* L, int i, ElemType* e) 
 {
-    if (i < 1 || i > L->length) {			        // 判断i的范围是否有效
+    // 判断i的范围是否有效
+    if (i < 1 || i > L->length) {
 		return ERROR;
 	}
 
     *e = L->data[i -1];
 
     for (int j = i; j < L->length; ++j) {
-	    L->data[j - 1] = L->data[j];                // 将第i个位置之后的元素前移
+	    // 将第i个位置之后的元素前移
+        L->data[j - 1] = L->data[j];
 	}
-
-	L->length--;							        // 线性表长度减1
+    
+    // 线性表长度减1
+	L->length--;
 
 	return OK;
 }
