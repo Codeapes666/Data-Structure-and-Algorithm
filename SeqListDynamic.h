@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define InitSize    50	    // 定义线性表的初始长度
+#define InitSize    100	    // 定义线性表的初始长度
 #define OK          1
 #define ERROR       0
 #define OVERFLOW   -1
@@ -10,8 +10,8 @@
 typedef int ElemType;
 
 typedef struct {
-	ElemType* data;		    // 动态分配数组的指针		
-	int MaxSize;	        // 线性表的最大容量
+    ElemType* data;		    // 动态分配数组的指针		
+    int MaxSize;	        // 线性表的最大容量
     int length;             // 线性表的当前长度
 } SeqList;				    // 动态分配数组顺序表的类型定义
 
