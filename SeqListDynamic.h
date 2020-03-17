@@ -54,7 +54,7 @@ int DestroyList(SeqList* L)
 
 // 清空线性表
 int ClearList(SeqList* L)
-{   
+{
 	L->length = 0;
 
 	return OK;
@@ -79,7 +79,7 @@ int ListLength(SeqList L)
 
 // 按序查找
 // 获取表L中第i个位置的元素值
-int GetElem(SeqList L, int i ,ElemType* e) 
+int GetElem(SeqList L, int i ,ElemType* e)
 {
 	if (L.length == 0) {
 		return ERROR;
@@ -95,7 +95,7 @@ int GetElem(SeqList L, int i ,ElemType* e)
 
 // 按值查找
 // 在顺序表L中查找第一个值等于e的元素，并返回其位序
-int LocateElem(SeqList L, ElemType e) 
+int LocateElem(SeqList L, ElemType e)
 {
 	if (L.length == 0) {
 		return ERROR;
@@ -108,7 +108,7 @@ int LocateElem(SeqList L, ElemType e)
 		}
 	}
 
-	return ERROR;							
+	return ERROR;
 }
 
 // 返回前驱元素值
@@ -150,18 +150,18 @@ int NextElem(SeqList L, ElemType cur_e, ElemType* next_e)
 // 插入操作
 // 在顺序表L的第i（1 ≤ i ≤ length + 1）个位置插入新元素e
 // 插入成功返回OK，插入失败返回ERROR
-int ListInsert(SeqList* L, int i, ElemType e) 
+int ListInsert(SeqList* L, int i, ElemType e)
 {
 	SeqList* pList;
-	
+
 	// 判断i的范围是否有效
 	if (i < 1 || i > L->length + 1) {
 		return ERROR;
 	}
 
-	if (L->length >= L->MaxSize) {			
-		
-		pList->data = (ElemType*)realloc(L->data, (L->MaxSize + InitSize) * sizeof(ElemType)); 
+	if (L->length >= L->MaxSize) {
+
+		pList->data = (ElemType*)realloc(L->data, (L->MaxSize + InitSize) * sizeof(ElemType));
 
 		if (pList->data == NULL) {
 			exit(OVERFLOW);
@@ -187,7 +187,7 @@ int ListInsert(SeqList* L, int i, ElemType e)
 // 删除操作
 // 删除顺序表L中第i（1 ≤ i ≤ length）个位置的元素
 // 删除成功返回OK，删除失败返回ERROR。如删除成功，用e返回删除元素的值
-int ListDelete(SeqList* L, int i, ElemType* e) 
+int ListDelete(SeqList* L, int i, ElemType* e)
 {
 	// 判断i的范围是否有效
 	if (i < 1 || i > L->length) {
@@ -200,7 +200,7 @@ int ListDelete(SeqList* L, int i, ElemType* e)
 		// 将第i个位置之后的元素前移
 		L->data[j - 1] = L->data[j];
 	}
-	
+
 	// 线性表长度减1
 	L->length--;
 
@@ -236,7 +236,7 @@ void UnionList(SeqList* SeqLA, SeqList SeqLB)
 		GetElem(SeqLB, i, &e);
 
 		// 若A里没有这个元素
-		if (LocateElem(*SeqLA, e) == 0) {          
+		if (LocateElem(*SeqLA, e) == 0) {
 			// 插入到A的尾部
 			// lengthA++;
 			// ListInsert(SeqLA, lengthA, e);
@@ -287,7 +287,7 @@ void MergeList(SeqList SeqLA, SeqList SeqLB, SeqList* SeqLC)
 		// 本来A、B就有序，直接全部插入到C末尾即可
 		ListInsert(SeqLC, ++lengthC, iSeqLA);
 	}
-	
+
 	while (j <= lengthB) {
 		GetElem(SeqLB, j++, &jSeqLB);
 		ListInsert(SeqLC, ++lengthB, jSeqLB);
