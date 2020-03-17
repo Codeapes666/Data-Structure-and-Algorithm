@@ -18,18 +18,18 @@ typedef struct {
 // 初始化顺序表
 int InitList(SeqList* L)
 {
-    (*L).data = (ElemType*)malloc(sizeof(ElemType) * InitSize);
+    L->data = (ElemType*)malloc(sizeof(ElemType) * InitSize);
 
     // 判断内存是否分配成功
-    if ((*L).data == NULL) {
+    if (L->data == NULL) {
         exit(OVERFLOW);
     }
 
     // 内存分配成功，开始是空表，故当前长度置为0
-    (*L).length = 0;
+    L->length = 0;
 
     // 初始化表的存储容量，即当前表最大的存储量
-    (*L).MaxSize = InitSize;
+    L->MaxSize = InitSize;
 
     return OK;
 }
@@ -39,15 +39,15 @@ int InitList(SeqList* L)
 // 所以顺序表销毁可以只释放基址，就会自动释放所有空间，而链表要一个一个的把节点删除
 int DestroyList(SeqList* L)
 {
-    if ((*L).data == NULL) {       // 若当前表为空，直接return
+    if (L->data == NULL) {          // 若当前表为空，直接return
         return ERROR;
     }
 
-    free((*L).data);               // 释放内存
-    (*L).data = NULL;              // 指针置空
+    free((*L).data);                // 释放内存
+    (*L).data = NULL;               // 指针置空
 
-    (*L).length = 0;               // 线性表长度置为0
-    (*L).MaxSize = 0;              // 线性表最大容量置为0
+    (*L).length = 0;                // 线性表长度置为0
+    (*L).MaxSize = 0;               // 线性表最大容量置为0
 
     return OK;
 }
@@ -87,7 +87,7 @@ int GetElem(SeqList L, int i ,ElemType* e)
 		return ERROR;
 	}
 
-    *e = *(L.data + i - 1);
+    *e = L.data[i - 1];
 
 	return OK;
 }
@@ -101,7 +101,7 @@ int LocateElem(SeqList L, ElemType e)
     }
 
 	for (int i = 0; i < L.length; ++i) {
-		if (*(L.data + 1) == e) {
+		if (L.data[i] == e) {
 			return i + 1;				// 下表为i的元素等于e，返回其位序i+1
 		}
 	}
@@ -118,8 +118,8 @@ int PriorElem(SeqList L, ElemType cur_e, ElemType* pre_e)
 
     for (int i = 0; i < L.length; ++i) {
         // 当前元素cur_e不是第一个元素则有前驱
-        if (i != 0 && (*(L.data + i) == cur_e)) {
-            *pre_e = *(L.data + i - 1);
+        if (i != 0 && L.data[i] == cur_e) {
+            *pre_e = L.data[i - 1];
             return *pre_e;
         }
     }
@@ -136,8 +136,8 @@ int NextElem(SeqList L, ElemType cur_e, ElemType* next_e)
 
     for (int i = 0; i < L.length; ++i) {
         // 当前元素cur_e不是最后一个元素则有后继
-        if ((i != L.length - 1) && (*(L.data + i) == cur_e)) {
-            *next_e = *(L.data + i + 1);
+        if ((i != L.length - 1) && L.data[i] == cur_e) {
+            *next_e = L.data[i + 1];
             return *next_e;
         }
     }
@@ -169,13 +169,11 @@ int ListInsert(SeqList* L, int i, ElemType e)
     }
     if (i != L->length + 1) {
         for (int j = L->length - 1; j >= i - 1; --j) {
-            *(L->data + j + 1) = *(L->data + j);
-            // L.data[j + 1] = L.data[j];
+            L->data[j + 1] = L->data[j];
         }
     }
 
-    *(L->data + i - 1) = e;
-    // L.data[i - 1] = e;
+    L->data[i - 1] = e;
 
     L->length++;
 
@@ -192,12 +190,10 @@ int ListDelete(SeqList* L, int i, ElemType* e)
 		return ERROR;
 	}
 
-    e = *(L->data + i -1);
-    // e = L.data[i - 1];
+    *e = L->data[i -1];
 
     for (int j = i; j < L->length; ++j) {
-		*(L->data + j - 1) = *(L->data + j);        // 将第i个位置之后的元素前移
-        // L.data[j - 1] = L.data[j];
+	    L->data[j - 1] = L->data[j];                // 将第i个位置之后的元素前移
 	}
 
 	L->length--;							        // 线性表长度减1
@@ -213,7 +209,7 @@ int TraverseList(SeqList L)
 	}
 
 	for (int i = 0; i < L.length; ++i) {
-		printf("data[%d] = %d\n", i, *(L.data + i));
+		printf("data[%d] = %d\n", i, L.data[i]);
 	}
 
 	printf("\n");
@@ -223,7 +219,7 @@ int TraverseList(SeqList L)
 
 // 合并线性表A与B，时间复杂度O(lengthA * lengthB)
 // 把在线性表B里，但不存在于线性表A的元素插入到A中，只改变A，不修改B
-void Union(SeqList* SeqLA, SeqList SeqLB)
+void UnionList(SeqList* SeqLA, SeqList SeqLB)
 {
     int lengthA = SeqLA->length;
     int lengthB = SeqLB.length;
@@ -234,8 +230,7 @@ void Union(SeqList* SeqLA, SeqList SeqLB)
         GetElem(SeqLB, i, &e);
 
         // 若A里没有这个元素
-        if (LocateElem(*SeqLA, e) == 0) {
-            
+        if (LocateElem(*SeqLA, e) == 0) {          
             // 插入到A的尾部
             // lengthA++;
             // ListInsert(SeqLA, lengthA, e);
@@ -287,8 +282,7 @@ void MergeList(SeqList SeqLA, SeqList SeqLB, SeqList* SeqLC)
         ListInsert(SeqLC, ++lengthC, iSeqLA);
     }
     
-    while (j <= lengthB)
-    {
+    while (j <= lengthB) {
         GetElem(SeqLB, j++, &jSeqLB);
         ListInsert(SeqLC, ++lengthB, jSeqLB);
     }
