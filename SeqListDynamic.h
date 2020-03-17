@@ -43,11 +43,11 @@ int DestroyList(SeqList* L)
         return ERROR;
     }
 
-    free((*L).data);                // 释放内存
-    (*L).data = NULL;               // 指针置空
+	free(L->data);                	// 释放内存
+	L->data = NULL;               	// 指针置空
 
-    (*L).length = 0;                // 线性表长度置为0
-    (*L).MaxSize = 0;               // 线性表最大容量置为0
+	L->length = 0;                	// 线性表长度置为0
+	L->MaxSize = 0;               	// 线性表最大容量置为0
 
     return OK;
 }
@@ -55,7 +55,7 @@ int DestroyList(SeqList* L)
 // 清空线性表
 int ClearList(SeqList* L)
 {   
-    (*L).length = 0;
+    L->length = 0;
 
     return OK;
 }
@@ -63,7 +63,8 @@ int ClearList(SeqList* L)
 // 判空
 bool ListEmpty(SeqList L)
 {
-	if (L.length == 0) {            // 线性表为空返回TRUE
+	// 线性表为空返回true
+	if (L.length == 0) {
 		return true;
 	}
 
