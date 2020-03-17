@@ -13,7 +13,7 @@ typedef struct {
 	ElemType* data;					// 动态分配数组的指针
 	int MaxSize;					// 线性表的最大容量
 	int length;						// 线性表的当前长度
-	} SeqList;						// 动态分配数组顺序表的类型定义
+} SeqList;							// 动态分配数组顺序表的类型定义
 
 // 初始化顺序表
 int InitList(SeqList* L)
