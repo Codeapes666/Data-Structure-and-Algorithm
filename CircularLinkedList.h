@@ -1,9 +1,10 @@
 #include <stdio.h>
 
-#define OK 1
-#define ERROR 0
+#define OK      1
+#define ERROR   0
 
 typedef int ElemType;
+typedef int Status;
 
 // 定义循环链表结点类型
 typedef struct LNode {
@@ -15,7 +16,7 @@ typedef struct LNode {
 // 当链表遍历时，判别当前指针p是否指向表尾结点的终止条件不同
 
 // 遍历操作
-int PrintList(LinkList L)
+Status PrintList(LinkList L)
 {
     if (L == NULL) {
         return ERROR;
