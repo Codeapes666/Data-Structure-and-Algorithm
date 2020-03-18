@@ -2,10 +2,12 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define OK 1
-#define ERROR 0
+#define OK          1
+#define ERROR       0
+#define OVERFLOW   -1
 
 typedef int ElemType;
+typedef int Status;
 
 // 定义单链表结点类型
 typedef struct LNode {
@@ -16,18 +18,18 @@ typedef struct LNode {
 // LinkList与LNode*，两者本质上是等价的
 
 // 初始化单链表
-LinkList InitList(LinkList* L)
+Status InitList(LinkList* L)
 {
     *L = (LinkList)malloc(sizeof(LNode));
 
     if (*L == NULL ) {
-        return;
+        exit(OVERFLOW);
     }
 
     (*L)->data = 0;
     (*L)->next = NULL;
 
-    return *L;
+    return OK;
 }
 
 // 前插法创建单链表
@@ -36,20 +38,21 @@ LinkList CreatList_H(LinkList* L)
     // 从表尾到表头逆向建立单链表L，每次均在头结点之后插入元素
     *L = (LinkList)malloc(sizeof(LNode));           // 创建头结点
 
-    if (L == NULL) {
-        return;
+    if (*L == NULL) {
+        exit(OVERFLOW);
     }
 
     (*L)->next = NULL;                              // 初始化为空链表
 
     LNode* p = NULL;
     int x = 0;
+    
     while (scanf("%d", &x) != EOF) {
         p = (LNode*)malloc(sizeof(LNode));          // 创建新结点
 
         // 判断内存是否分配成功
         if (p == NULL) {
-            return;
+            exit(OVERFLOW);
         }
 
         p->data = x;                                // 输入元素值赋给新结点*p的数据域
@@ -66,8 +69,8 @@ LinkList CreatList_R(LinkList* L)
     // 从表头到表尾正向建立单链表L，每次均在表尾插入元素
     *L = (LinkList)malloc(sizeof(LNode));            // 创建头结点
 
-    if (L == NULL) {
-        return;
+    if (*L == NULL) {
+        exit(OVERFLOW);
     }
 
     (*L)->next = NULL;                               // 初始化为空链表
@@ -75,11 +78,12 @@ LinkList CreatList_R(LinkList* L)
     LNode* p = NULL;
     LNode* r = *L;
     int x = 0;
+    
     while (scanf("%d", &x) != EOF) {
         p = (LNode*)malloc(sizeof(LNode));          // 生成新结点
 
         if (p == NULL) {
-            return;
+            exit(OVERFLOW);
         }
 
         p->data = x;                                // 输入元素值赋给新结点*p的数据域
@@ -92,7 +96,7 @@ LinkList CreatList_R(LinkList* L)
 }
 
 // 求单链表的长度
-int Length(LinkList L)
+Status Length(LinkList L)
 {
     int length = 0;
     LNode* p = L->next;
@@ -107,7 +111,7 @@ int Length(LinkList L)
 
 // 按序查找
 // 在带头结点的单链表L中根据序号i获取元素的值，用e返回L中第i个数据元素的值
-int GetElem(LinkList L, int i ,ElemType* e) 
+Status GetElem(LinkList L, int i ,ElemType* e)
 {
     LinkList p = L->next;                           // 初始化，p指向首原结点
     int j = 1;                                      // 计数器j初值赋为1
@@ -143,7 +147,7 @@ LinkList LocateElem(LinkList L, ElemType e)
 
 // 插入操作
 // 在带头结点的单链表L中第i个位置插入值为e的新结点
-int ListInsert(LinkList* L, int i, ElemType e)
+Status ListInsert(LinkList* L, int i, ElemType e)
 {
     LinkList p = *L;
     int j = 0;
@@ -158,12 +162,10 @@ int ListInsert(LinkList* L, int i, ElemType e)
         return ERROR;
     }
 
-    LNode* s = NULL;
-
-    s = (LNode*)malloc(sizeof(LNode));              // 生成新结点*s
+    LNode* s = (LNode*)malloc(sizeof(LNode));       // 生成新结点*s
 
     if (s == NULL) {
-        return;
+        exit(OVERFLOW);
     }
 
     s->data = e;                                    // 将结点*s的数据域置为e
@@ -176,7 +178,7 @@ int ListInsert(LinkList* L, int i, ElemType e)
 
 // 删除操作
 // 在带头结点的单链表L中，删除第i个元素
-int ListDelete(LinkList* L, int i)
+Status ListDelete(LinkList* L, int i)
 {
     LinkList p = *L;
     int j = 0;
@@ -193,6 +195,7 @@ int ListDelete(LinkList* L, int i)
 
     LinkList q = p->next;                           // 令q指向被删除结点
     p->next = q->next;                              // 将*q结点从链中“断开”
+    
     free(q);                                        // 释放删除结点的空间
     p = NULL;
     
@@ -211,7 +214,7 @@ bool Empty(LinkList L)
 }
 
 // 遍历操作
-int PrintList(LinkList L)
+Status PrintList(LinkList L)
 {
     if (L == NULL) {
         return ERROR;
@@ -230,14 +233,14 @@ int PrintList(LinkList L)
 }
 
 // 销毁操作
-int DestroyList(LinkList* L)
+Status DestroyList(LinkList* L)
 {
-    LinkList p = NULL;
-
     if (*L == NULL) {
         return ERROR;
     }
-
+    
+    LinkList p = NULL;
+    
     while (*L != NULL) {
         p = *L;
         *L = (*L)->next;
@@ -249,17 +252,15 @@ int DestroyList(LinkList* L)
 }
 
 // 清空操作
-int ClearList(LinkList L)
+Status ClearList(LinkList L)
 {
     if (L == NULL) {
         return ERROR;
     }
 
-    LinkList p = NULL;
-    LinkList q = NULL;
-
     // p指向头结点的下一个结点
-    p = L->next;                
+    LinkList p = L->next;
+    LinkList q = NULL;
 
     while (p != NULL) {
         q = p->next;
