@@ -152,24 +152,28 @@ int NextElem(SeqList L, ElemType cur_e, ElemType* next_e)
 // 插入成功返回OK，插入失败返回ERROR
 int ListInsert(SeqList* L, int i, ElemType e)
 {
-    SeqList* pList;
+    ElemType* newBase = NULL;
 
     // 判断i的范围是否有效
     if (i < 1 || i > L->length + 1) {
         return ERROR;
     }
-
+    
+    // 当前空间已满，再分配容量
     if (L->length >= L->MaxSize) {
 
-        pList->data = (ElemType*)realloc(L->data, (L->MaxSize + InitSize) * sizeof(ElemType));
+        newBase = (ElemType*)realloc(L->data, (L->MaxSize + InitSize) * sizeof(ElemType));
 
-        if (pList->data == NULL) {
+        if (newBase == NULL) {
             exit(OVERFLOW);
         }
-
-        L->data = pList->data;
+        
+        // 新基址
+        L->data = newBase;
+        // 增加空间容量
         L->MaxSize += InitSize;
     }
+    
     if (i != L->length + 1) {
         for (int j = L->length - 1; j >= i - 1; --j) {
             L->data[j + 1] = L->data[j];
@@ -177,8 +181,9 @@ int ListInsert(SeqList* L, int i, ElemType e)
     }
 
     L->data[i - 1] = e;
-
-    L->length++;
+    
+    // 线性表长度加1
+    ++L->length;
 
     return OK;
 
@@ -202,7 +207,7 @@ int ListDelete(SeqList* L, int i, ElemType* e)
     }
 
     // 线性表长度减1
-    L->length--;
+    --L->length;
 
     return OK;
 }
@@ -236,7 +241,7 @@ void UnionList(SeqList* SeqLA, SeqList SeqLB)
         GetElem(SeqLB, i, &e);
 
         // 若A里没有这个元素
-        if (LocateElem(SeqLA, e) == 0) {
+        if (LocateElem(*SeqLA, e) == 0) {
             // 插入到A的尾部
             // lengthA++;
             // ListInsert(SeqLA, lengthA, e);
