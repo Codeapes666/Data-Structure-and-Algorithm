@@ -1,8 +1,8 @@
 #include <stdio.h>
 
 #define MaxSize 100             // 定义线性表的最大长度
-#define OK 1
-#define ERROR 0
+#define OK      1
+#define ERROR   0
 
 typedef int ElemType;
 
