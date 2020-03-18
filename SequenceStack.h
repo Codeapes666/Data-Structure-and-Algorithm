@@ -126,4 +126,4 @@ Status StackTraverse(SeqStack S)
 }
 
 // 若栈顶指针初始化为S.top = -1，即栈顶指针指向栈顶元素所在位置
-// 入栈操作变为：*(S.top++) = e；出栈操作变为：e = *(S.top--)
+// 入栈操作变为：*(++S->top) = e；出栈操作变为：*e = *(S->top--)
