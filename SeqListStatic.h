@@ -1,15 +1,15 @@
 #include <stdio.h>
 
-#define MaxSize 100				// 定义线性表的最大长度
+#define MaxSize 100             // 定义线性表的最大长度
 #define OK 1
 #define ERROR 0
 
 typedef int ElemType;
 
 typedef struct {
-    ElemType data[MaxSize];		// 顺序表的元素
-    int length;					// 顺序表的当前长度
-} SeqList;			            // 顺序表的类型定义
+    ElemType data[MaxSize];     // 顺序表的元素
+    int length;                 // 顺序表的当前长度
+} SeqList;                      // 顺序表的类型定义
 
 // 初始化顺序表
 int InitList(SeqList* L)
