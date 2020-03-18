@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define MAXQSIZE    50     // 队列可能达到的最大长度
+#define MAXQSIZE    100     // 队列可能达到的最大长度
 #define OK          1
 #define ERROR       0
 #define OVERFLOW   -1
@@ -12,26 +12,26 @@ typedef int Status;
 
 // 队列的顺序存储结构
 typedef struct {
-    ElemType* base;     // 存储空间的基地址
-    int front;          // 头指针
-    int rear;           // 尾指针
-}SeqQueue;
+    ElemType* base;                 // 存储空间的基地址
+    int front;                      // 头指针
+    int rear;                       // 尾指针
+} SeqQueue;
 
 // 为了解决“假溢出”问题，一个较巧妙的办法是将顺序队列变为一个环状空间，即循环队列
 // 区分队空队满的两种处理方式：
-// 1）牺牲一个单元来区分队空和队满。
-// 2）类型中增设表示元素个数的数据成员。
+// 1. 牺牲一个单元来区分队空和队满。
+// 2. 类型中增设表示元素个数的数据成员。
 
 // 队列的初始化
 Status InitQueue(SeqQueue* Q)
 {   // 为队列分配一个空间
     Q->base = (ElemType*)malloc(sizeof(ElemType) * MAXQSIZE);
 
-    if (Q->base == NULL) {       // 空间分配失败
+    if (Q->base == NULL) {          // 空间分配失败
         exit(OVERFLOW);
     }
 
-    Q->front = Q->rear = 0;       // 头指针和尾指针置为空，队列为空
+    Q->front = Q->rear = 0;         // 头指针和尾指针置为空，队列为空
 
     return OK;
 }
@@ -43,8 +43,8 @@ Status DestroyQueue(SeqQueue* Q)
         return ERROR;
     }
 
-    free(Q->base);               // 释放内存
-    Q->base = NULL;              // 指针置空
+    free(Q->base);                  // 释放内存
+    Q->base = NULL;                 // 指针置空
 
     Q->front = Q->rear = 0;
 
@@ -78,8 +78,8 @@ Status QueueLength(SeqQueue Q)
 // 取队头元素
 ElemType GetHead(SeqQueue Q)
 {
-    if (Q.front != Q.rear) {                // 队列非空
-        return Q.base[Q.front];             // 返回队头元素的值，队头指针不变
+    if (Q.front != Q.rear) {                    // 队列非空
+        return Q.base[Q.front];                 // 返回队头元素的值，队头指针不变
     }
 }
 
@@ -90,8 +90,8 @@ Status EnQueue(SeqQueue* Q, ElemType e)
         return ERROR;
     }
 
-    Q->base[Q->rear] = e;                     // 新元素插入队尾
-    Q->rear = (Q->rear + 1) % MAXQSIZE;       // 队尾指针加1
+    Q->base[Q->rear] = e;                       // 新元素插入队尾
+    Q->rear = (Q->rear + 1) % MAXQSIZE;         // 队尾指针加1
 
     return OK;
 }
@@ -103,8 +103,8 @@ Status DeQueue(SeqQueue* Q, ElemType* e)
         return ERROR;
     }
 
-    *e = Q->base[Q->front];                    // 保存队头元素
-    Q->front = (Q->front + 1) % MAXQSIZE;      // 队头指针加1
+    *e = Q->base[Q->front];                     // 保存队头元素
+    Q->front = (Q->front + 1) % MAXQSIZE;       // 队头指针加1
 
     return OK;
 }
