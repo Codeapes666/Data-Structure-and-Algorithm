@@ -13,7 +13,7 @@ typedef int Status;
 typedef struct StackNode{
     ElemType data;              // 数据域
     struct StackNode* next;     // 指针域
-}StackNode, *LinkStack;
+} StackNode, *LinkStack;
 
 // 栈的初始化
 // 这里规定链栈没有头结点
@@ -39,7 +39,6 @@ Status DestoryStack(LinkStack* S)
 }
 
 // 清空栈
-// 不带头结点的链栈，销毁和清空实现相同
 Status ClearStack(LinkStack* S)
 {
     LinkStack p = NULL;
@@ -49,7 +48,9 @@ Status ClearStack(LinkStack* S)
         *S = (*S)->next;
         free(p);
     }
-
+    
+    *S = NULL;
+    
     return OK;
 }
 
@@ -69,7 +70,7 @@ Status StackLength(LinkStack S)
     int length = 0;
 
     while (S->next != NULL) {
-        length++;
+        ++length;
         S = S->next;
     }
 
@@ -79,8 +80,8 @@ Status StackLength(LinkStack S)
 // 取栈顶元素
 ElemType GetTop(LinkStack S)
 {
-    if (S != NULL) {    // 栈非空
-        return S->data; // 返回栈顶元素的值，栈顶指针不变
+    if (S != NULL) {        // 栈非空
+        return S->data;     // 返回栈顶元素的值，栈顶指针不变
     }
 }
 
@@ -88,13 +89,13 @@ ElemType GetTop(LinkStack S)
 Status Push(LinkStack* S, ElemType e)
 {   // 生成新结点
     LinkStack p = (StackNode*)malloc(sizeof(StackNode));
-    if (p == NULL) {    // 若内存分配失败
+    if (p == NULL) {        // 若内存分配失败
         exit(OVERFLOW);
     }
 
-    p->data = e;        // 将新结点数据域置为e
-    p->next = *S;       // 将新结点插入栈顶
-    *S = p;             // 修改栈顶指针为p
+    p->data = e;            // 将新结点数据域置为e
+    p->next = *S;           // 将新结点插入栈顶
+    *S = p;                 // 修改栈顶指针为p
 
     return OK;
 }
