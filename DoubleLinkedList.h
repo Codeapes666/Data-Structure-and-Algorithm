@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define OK 1
-#define ERROR 0
+#define OK      1
+#define ERROR   0
 
 typedef int ElemType;
+typedef int Status;
 
 // 定义双链表结点类型
 typedef struct DLNode {
@@ -39,7 +40,7 @@ DLNode* GetElem_DL(DLinkList L, int i)
 
 // 插入操作
 // 在带头结点的双向链表L中第i个位置之前插入元素e
-int ListInsert_DL(DLinkList* L, int i, ElemType e)
+Status ListInsert_DL(DLinkList* L, int i, ElemType e)
 {
     DLinkList p = NULL;
     if ((p = GetElem_DL(*L, i)) == NULL) {      // 在L中确定第i个元素的位置指针p
@@ -68,3 +69,21 @@ int ListInsert_DL(DLinkList* L, int i, ElemType e)
 // p->next->prior = s;
 // s->prior = p;
 // p->next = s;
+
+// 删除操作
+// 删除带头结点的双向链表L中第i个元素
+Status ListDelete_DL(DLinkList* L, int i)
+{
+    DLinkList p = NULL;
+    if ((p = GetElem_DL(*L, i)) == NULL) {      // 在L中确定第i个元素的位置指针p
+        return ERROR;                           // p为NULL时，第i个元素不存在
+    }
+    
+    p->prior->next = p->next;                   // 修改被删结点的前驱结点的后继指针
+    p->next->prior = p->prior;                  // 修改被删结点的后继结点的前驱指针
+    
+    free(p);                                    // 释放被删除的空间
+    p = NULL;
+    
+    return OK;
+}
