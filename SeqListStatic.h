@@ -126,20 +126,20 @@ int NextElem(SeqList L, ElemType cur_e, ElemType* next_e)
 // 插入成功返回OK，插入失败返回ERROR
 int ListInsert(SeqList* L, int i, ElemType e)
 {
-    if (i < 1 || i > L->length + 1) {		// 判断i的范围是否有效
+    if (i < 1 || i > L->length + 1) {           // 判断i的范围是否有效
         return ERROR;
     }
 
-    if (L->length >= MaxSize) {				// 当前空间已满，不能插入
+    if (L->length >= MaxSize) {                 // 当前空间已满，不能插入
         return ERROR;
     }
 
-    for (int j = L->length; j >= i; --j) {	// 将第i个位置及之后的元素后移
+    for (int j = L->length; j >= i; --j) {      // 将第i个位置及之后的元素后移
         L->data[j] = L->data[j - 1];
     }
 
-    L->data[i - 1] = e;						// 在位置i处插入e
-    ++L->length;							// 线性表长度加1
+    L->data[i - 1] = e;                         // 在位置i处插入e
+    ++L->length;                                // 线性表长度加1
 
     return OK;
 }
@@ -149,17 +149,17 @@ int ListInsert(SeqList* L, int i, ElemType e)
 // 删除成功返回OK，删除失败返回ERROR。如删除成功，用e返回删除元素的值
 int ListDelete(SeqList* L, int i, ElemType* e) 
 {
-    if (i < 1 || i > L->length) {			// 判断i的范围是否有效
+    if (i < 1 || i > L->length) {               // 判断i的范围是否有效
         return ERROR;
     }
 
-    *e = L->data[i - 1];					// 将要删除的元素赋值给e
+    *e = L->data[i - 1];                        // 将要删除的元素赋值给e
 
     for (int j = i; j < L->length; ++j) {
-        L->data[j - 1] = L->data[j];		// 将第i个位置之后的元素前移
+        L->data[j - 1] = L->data[j];            // 将第i个位置之后的元素前移
     }
 
-    --L->length;							// 线性表长度减1
+    --L->length;                                // 线性表长度减1
 
     return OK;
 }
