@@ -12,7 +12,7 @@ typedef struct DLNode {
     ElemType data;              // 数据域
     struct DLNode* prior;       // 直接前驱
     struct DLNode* next;        // 直接后继
-}DLNode, *DLinkList;            // DLinkList与DLNode*，两者本质上是等价的
+} DLNode, *DLinkList;            // DLinkList与DLNode*，两者本质上是等价的
 
 // 按序查找
 // 取出带头结点的双向链表中第i个位置的结点指针
