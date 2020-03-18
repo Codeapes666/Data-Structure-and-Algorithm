@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define MAXSIZE     50       // 顺序栈存储空间的初始分配量
+#define MAXSIZE     100             // 顺序栈存储空间的初始分配量
 #define OK          1
 #define ERROR       0
 #define OVERFLOW   -1
@@ -10,12 +10,20 @@
 typedef int ElemType;
 typedef int Status;
 
+// s->top有两种可能，一种是指向栈顶元素，另一种是指向比栈顶元素更高一层的空元素，这里我们采用第二种
+
 // 顺序栈的存储结构
 typedef struct {
-    ElemType* base;         // 栈底指针
-    ElemType* top;          // 栈顶指针
-    int stacksize;          // 栈可用的最大容量
-}SeqStack;
+    ElemType* base;                 // 栈底指针
+    ElemType* top;                  // 栈顶指针
+    int stacksize;                  // 栈可用的最大容量
+} SeqStack;
+
+// 顺序栈的另一种存储结构
+//typedef struct {
+//    ElemType data[MAXSIZE];
+//    int top;                      // 用来存放栈顶元素的下标
+//} SeqStack;
 
 // 栈的初始化
 Status InitStack(SeqStack* S)
@@ -36,13 +44,15 @@ Status InitStack(SeqStack* S)
 Status DestoryStack(SeqStack* S)
 {
     if (S->base != NULL) {
-        free(S->base);       // 释放空间    
-        S->base = NULL;      // 指针置空
-        S->top = NULL;       // 指针置空
+        free(S->base);              // 释放空间
+        S->base = NULL;             // 指针置空
+        S->top = NULL;
         S->stacksize = 0;
 
         return OK;
     }
+    
+    return ERROR;
 }
 
 // 清空栈
@@ -50,9 +60,10 @@ Status ClearStack(SeqStack* S)
 {
     if (S->base != NULL) {
         S->top = S->base;
+        return OK;
     }
 
-    return OK;
+    return ERROR;
 }
 
 // 判空
@@ -94,11 +105,11 @@ Status Push(SeqStack* S, ElemType e)
 // 出栈
 Status Pop(SeqStack* S, ElemType* e)
 {
-    if (S->top == S->base) {        // 栈空
+    if (S->top == S->base) {                    // 栈空
         return ERROR;
     }
 
-    *e = *(S->top--);               // 栈顶指针减1，将栈顶元素赋给e
+    *e = *(--S->top);                           // 栈顶指针减1，将栈顶元素赋给e
 
     return OK;
 }
@@ -107,7 +118,7 @@ Status Pop(SeqStack* S, ElemType* e)
 Status StackTraverse(SeqStack S)
 {
     while (S.top != S.base) {
-        printf("%d ", *(S.top--));
+        printf("%d ", *(--S.top));
     }
     printf("\n");
 
