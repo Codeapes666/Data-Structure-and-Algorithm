@@ -12,7 +12,7 @@ typedef struct BiThrNode {
     struct BiThrNode* rchild;       // 右孩子指针
     int LTag;                       // 左线索标志，0：lchild域指示结点的左孩子，1：lchild域指示结点的前驱
     int RTag;                       // 右线索标志，0：rchild域指示结点的右孩子，1：rchild域指示结点的后继
-}BiThrNode, *BiThrTree;
+} BiThrNode, *BiThrTree;
 
 // pre是全局变量，初始化时其右孩子指针为空，便于在树的最左点开始建线索
 BiThrTree pre = NULL;
