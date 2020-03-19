@@ -21,7 +21,7 @@ typedef struct BiTNode {
     TElemType data;                 // 结点数据域
     struct BiTNode* lchild;         // 左孩子结点
     struct BiTNode* rchild;         // 右孩子结点
-}BiTNode, *BiTree;
+} BiTNode, *BiTree;
 
 /**************************栈方法****************************/
 
