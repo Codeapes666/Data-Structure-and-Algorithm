@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 #define MaxSize 100             // 定义线性表的最大长度
 #define OK      1
@@ -19,31 +20,26 @@ int InitList(SeqList* L)
     return OK;
 }
 
-// 销毁线性表
-int DestroyList(SeqList* L)
-{
-    L->length = 0;
-
-    return OK;
-}
-
 // 清空线性表
 // 将L重置为空表
 int ClearList(SeqList* L)
 {
-    L->length = 0;
-
-    return OK;
+    if (L->length != 0) {
+        L->length = 0;
+        return OK;
+    }
+    
+    return ERROR;
 }
 
 // 判空操作
-int ListEmpty(SeqList L)
+bool ListEmpty(SeqList L)
 {
     if (L.length == 0) {
-        return OK;
+        return true;
     }
 
-    return ERROR;
+    return false;
 }
 
 // 求顺序表长度
