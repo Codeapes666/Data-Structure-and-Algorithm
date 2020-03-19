@@ -27,29 +27,14 @@ Status InitStack(LinkStack* S)
 // 销毁栈
 Status DestoryStack(LinkStack* S)
 {
-    LinkStack p = NULL;
-
-    while (*S != NULL) {
-        p = *S;
-        *S = (*S)->next;
-        free(p);
-    }
-
-    return OK;
-}
-
-// 清空栈
-Status ClearStack(LinkStack* S)
-{
-    LinkStack p = NULL;
-
-    while (*S != NULL) {
-        p = *S;
-        *S = (*S)->next;
-        free(p);
-    }
+    LinkStack p = *S;
+    LinkStack q = NULL;
     
-    *S = NULL;
+    while (p != NULL) {
+        q = p->next;
+        free(p);
+        p = q;
+    }
     
     return OK;
 }
