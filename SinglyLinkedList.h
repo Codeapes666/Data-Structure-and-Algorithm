@@ -239,14 +239,17 @@ Status DestroyList(LinkList* L)
         return ERROR;
     }
     
-    LinkList p = NULL;
+    LinkList p = (*L)->next;
+    LinkList q = NULL;
     
-    while (*L != NULL) {
-        p = *L;
-        *L = (*L)->next;
+    while (p != NULL) {
+        q = p->next;
         free(p);
-        p = NULL;
+        p = q;
     }
+    
+    free(*L);
+    *L = NULL;
 
     return OK;
 }
