@@ -10,7 +10,98 @@
 typedef int ElemType;
 typedef int Status;
 
-// s->top有两种可能，一种是指向栈顶元素，另一种是指向比栈顶元素更高一层的空元素，这里我们采用第二种
+// s->top有两种可能，一种是指向栈顶元素，另一种是指向比栈顶元素更高一层的空元素
+
+/*======== 第 1 种 ========*/
+
+// 顺序栈的存储结构
+typedef struct {
+    ElemType data[MAXSIZE];
+    int top;                        // 用来存放栈顶元素的下标
+} SqStack;
+
+// 栈的初始化
+Status InitStack(SqStack* S)
+{
+    S->top = -1;
+    return OK;
+}
+
+// 清空栈
+Status ClearStack(SqStack* S)
+{
+    if (S->top != -1) {
+        S->top = -1;
+        return OK;
+    }
+    
+    return ERROR;
+}
+
+// 判空
+bool StackEmpty(SqStack S)
+{
+    if (S.top == -1) {
+        return true;
+    }
+    
+    return false;
+}
+
+// 求栈长度
+Status StackLength(SqStack S)
+{
+    return S.top;
+}
+
+// 取栈顶元素
+ElemType GetTop(SqStack S, ElemType* e)
+{
+    if (S.top == -1) {
+        return ERROR;
+    }
+    
+    *e = S.data[S.top];
+    
+    return OK;
+}
+
+// 入栈
+Status Push(SqStack* S, ElemType e)
+{
+    if (S->top == MAXSIZE - 1) {                // 栈满
+        return ERROR;
+    }
+    
+    S->data[++S->top] = e;                      // 指针先加1，再入栈
+    
+    return OK;
+}
+
+// 出栈
+Status Pop(SqStack* S, ElemType* e)
+{
+    if (S->top == -1) {                         // 栈空
+        return ERROR;
+    }
+    
+    *e = S->data[S->top--];                     // 栈顶指针减1，将栈顶元素赋给e
+    
+    return OK;
+}
+
+// 遍历栈
+Status StackTraverse(SqStack S)
+{
+    while (S.top != -1) {
+        printf("%d ", S.data[S.top--]);
+    }
+    printf("\n");
+    
+    return OK;
+}
+
+/*======== 第 2 种 ========*/
 
 // 顺序栈的存储结构
 typedef struct {
@@ -18,12 +109,6 @@ typedef struct {
     ElemType* top;                  // 栈顶指针
     int stacksize;                  // 栈可用的最大容量
 } SeqStack;
-
-// 顺序栈的另一种存储结构
-//typedef struct {
-//    ElemType data[MAXSIZE];
-//    int top;                      // 用来存放栈顶元素的下标
-//} SeqStack;
 
 // 栈的初始化
 Status InitStack(SeqStack* S)
@@ -124,6 +209,3 @@ Status StackTraverse(SeqStack S)
 
     return OK;
 }
-
-// 若栈顶指针初始化为S.top = -1，即栈顶指针指向栈顶元素所在位置
-// 入栈操作变为：*(++S->top) = e；出栈操作变为：*e = *(S->top--)
