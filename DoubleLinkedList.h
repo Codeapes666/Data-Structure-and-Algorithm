@@ -1,22 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define OK      1
-#define ERROR   0
+#define OK          1
+#define ERROR       0
+#define OVERFLOW   -1
 
 typedef int ElemType;
 typedef int Status;
 
 // 定义双链表结点类型
-typedef struct DLNode {
+typedef struct DLNode 
+{
     ElemType data;              // 数据域
     struct DLNode* prior;       // 直接前驱
     struct DLNode* next;        // 直接后继
-} DLNode, *DLinkList;            // DLinkList与DLNode*，两者本质上是等价的
+} DLNode, *DLinkList;           // DLinkList与DLNode*，两者本质上是等价的
 
 // 按序查找
 // 取出带头结点的双向链表中第i个位置的结点指针
-DLNode* GetElem_DL(DLinkList L, int i)
+DLNode* GetElem(DLinkList L, int i)
 {
     if (i == 0) {               // 若等于0，则返回头结点
         return L;
@@ -40,18 +42,18 @@ DLNode* GetElem_DL(DLinkList L, int i)
 
 // 插入操作
 // 在带头结点的双向链表L中第i个位置之前插入元素e
-Status ListInsert_DL(DLinkList* L, int i, ElemType e)
+Status ListInsert(DLinkList* L, int i, ElemType e)
 {
     DLinkList p = NULL;
-    if ((p = GetElem_DL(*L, i)) == NULL) {      // 在L中确定第i个元素的位置指针p
+    if ((p = GetElem(*L, i)) == NULL) {         // 在L中确定第i个元素的位置指针p
         return ERROR;                           // p为NULL时，第i个元素不存在
     }
 
     DLinkList s = NULL;
     s = (DLinkList)malloc(sizeof(DLNode));      // 生成一个新结点s
 
-    if (s == NULL) {                            // 判断结点内存是否分配成功
-        return ERROR;
+    if (s == NULL) {                            // 空间分配失败
+        exit(OVERFLOW);
     }
 
     s->data = e;                                // 将结点s数据域置为e
@@ -72,10 +74,10 @@ Status ListInsert_DL(DLinkList* L, int i, ElemType e)
 
 // 删除操作
 // 删除带头结点的双向链表L中第i个元素
-Status ListDelete_DL(DLinkList* L, int i)
+Status ListDelete(DLinkList* L, int i)
 {
     DLinkList p = NULL;
-    if ((p = GetElem_DL(*L, i)) == NULL) {      // 在L中确定第i个元素的位置指针p
+    if ((p = GetElem(*L, i)) == NULL) {         // 在L中确定第i个元素的位置指针p
         return ERROR;                           // p为NULL时，第i个元素不存在
     }
     
