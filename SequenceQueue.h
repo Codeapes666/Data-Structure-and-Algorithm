@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define MAXQSIZE    100     // 队列可能达到的最大长度
+#define MAXQSIZE    100             // 队列可能达到的最大长度
 #define OK          1
 #define ERROR       0
 #define OVERFLOW   -1
@@ -10,8 +10,16 @@
 typedef int ElemType;
 typedef int Status;
 
+Status Visit (ElemType e)
+{
+    printf("%d ", e);
+
+    return OK;
+}
+
 // 队列的顺序存储结构
-typedef struct {
+typedef struct 
+{
     ElemType* base;                 // 存储空间的基地址
     int front;                      // 头指针
     int rear;                       // 尾指针
@@ -23,8 +31,9 @@ typedef struct {
 // 2. 类型中增设表示元素个数的数据成员。
 
 // 队列的初始化
-Status InitQueue(SeqQueue* Q)
-{   // 为队列分配一个空间
+Status InitQueue (SeqQueue* Q)
+{   
+    // 为队列分配一个空间
     Q->base = (ElemType*)malloc(sizeof(ElemType) * MAXQSIZE);
 
     if (Q->base == NULL) {          // 空间分配失败
@@ -37,14 +46,14 @@ Status InitQueue(SeqQueue* Q)
 }
 
 // 销毁队列
-Status DestroyQueue(SeqQueue* Q)
+Status DestroyQueue (SeqQueue* Q)
 {   
     if (Q->base == NULL) {
         return ERROR;
     }
 
-    free(Q->base);                  // 释放内存
-    Q->base = NULL;                 // 指针置空
+    free(Q->base);
+    Q->base = NULL; 
 
     Q->front = Q->rear = 0;
 
@@ -52,15 +61,19 @@ Status DestroyQueue(SeqQueue* Q)
 }
 
 // 清空队列
-Status ClearQueue(SeqQueue* Q)
+Status ClearQueue (SeqQueue* Q)
 {
+    if (Q->base == NULL) {
+        return ERROR;
+    }
+
     Q->front = Q->rear = 0;
 
     return OK;
 }
 
 // 判空
-bool QueueEmpty(SeqQueue Q)
+bool QueueEmpty (SeqQueue Q)
 {
     if (Q.front == Q.rear) {
         return true;
@@ -70,13 +83,13 @@ bool QueueEmpty(SeqQueue Q)
 }
 
 // 求队列长度
-Status QueueLength(SeqQueue Q)
+int QueueLength (SeqQueue Q)
 {
     return (Q.rear - Q.front + MAXQSIZE) % MAXQSIZE;
 }
 
 // 取队头元素
-ElemType GetHead(SeqQueue Q)
+ElemType GetHead (SeqQueue Q)
 {
     if (Q.front != Q.rear) {                    // 队列非空
         return Q.base[Q.front];                 // 返回队头元素的值，队头指针不变
@@ -84,8 +97,9 @@ ElemType GetHead(SeqQueue Q)
 }
 
 // 入队
-Status EnQueue(SeqQueue* Q, ElemType e)
-{   // 尾指针在循环意义上加1后等于头指针，表明队满
+Status EnQueue (SeqQueue* Q, ElemType e)
+{   
+    // 尾指针在循环意义上加1后等于头指针，表明队满
     if ((Q->rear + 1) % MAXQSIZE == Q->front) {
         return ERROR;
     }
@@ -97,8 +111,9 @@ Status EnQueue(SeqQueue* Q, ElemType e)
 }
 
 // 出队
-Status DeQueue(SeqQueue* Q, ElemType* e)
-{   // 队空
+Status DeQueue (SeqQueue* Q, ElemType* e)
+{   
+    // 队空
     if (Q->front == Q->rear) {
         return ERROR;
     }
@@ -110,14 +125,15 @@ Status DeQueue(SeqQueue* Q, ElemType* e)
 }
 
 // 遍历队列
-Status QueueTraverse(SeqQueue Q)
+Status QueueTraverse (SeqQueue Q, Status (*Visit)(ElemType))
 {
     int i = Q.front;
 
     while (i != Q.rear) {
-        printf("%d ", Q.base[i]);
+        Visit (Q.base[i]);
         i = (i + 1) % MAXQSIZE;
     }
+
     printf("\n");
 
     return OK;
