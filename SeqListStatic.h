@@ -6,14 +6,24 @@
 #define ERROR   0
 
 typedef int ElemType;
+typedef int Status;
 
-typedef struct {
+Status Visit (ElemType e)
+{
+    printf("%d ", e);
+
+    return OK;
+}
+
+// 顺序表的存储结构
+typedef struct
+{
     ElemType data[MaxSize];     // 顺序表的元素
     int length;                 // 顺序表的当前长度
 } SeqList;                      // 顺序表的类型定义
 
 // 初始化顺序表
-int InitList(SeqList* L)
+Status InitList (SeqList* L)
 {
     L->length = 0;
 
@@ -21,8 +31,7 @@ int InitList(SeqList* L)
 }
 
 // 清空线性表
-// 将L重置为空表
-int ClearList(SeqList* L)
+Status ClearList (SeqList* L)
 {
     if (L->length != 0) {
         L->length = 0;
@@ -33,7 +42,7 @@ int ClearList(SeqList* L)
 }
 
 // 判空操作
-bool ListEmpty(SeqList L)
+bool ListEmpty (SeqList L)
 {
     if (L.length == 0) {
         return true;
@@ -43,14 +52,14 @@ bool ListEmpty(SeqList L)
 }
 
 // 求顺序表长度
-int ListLength(SeqList L)
+int ListLength (SeqList L)
 {
     return L.length;
 }
 
 // 按序查找
 // 获取表L中第i个位置的元素值
-int GetElem(SeqList L, int i) 
+Status GetElem (SeqList L, int i) 
 {
     if (L.length == 0) {
         return ERROR;
@@ -65,7 +74,7 @@ int GetElem(SeqList L, int i)
 
 // 按值查找
 // 在顺序表L中查找第一个值等于e的元素，并返回其位序
-int LocateElem(SeqList L, ElemType e) 
+Status LocateElem (SeqList L, ElemType e) 
 {
     if (L.length == 0) {
         return ERROR;
@@ -82,17 +91,17 @@ int LocateElem(SeqList L, ElemType e)
 }
 
 // 返回前驱元素值
-int PriorElem(SeqList L, ElemType cur_e, ElemType* pre_e)
+Status PriorElem (SeqList L, ElemType cur, ElemType* pre)
 {
     if (L.length == 0) {
         return ERROR;
     }
 
-    for (int i = 0; i < L.length; ++i) {
-        // 当前元素cur_e不是第一个元素则有前驱
-        if (i != 0 && (L.data[i] == cur_e)) {
-            *pre_e = L.data[i - 1];
-            return *pre_e;
+    // 当前元素cur不是第一个元素则有前驱
+    for (int i = 1; i < L.length; ++i) {
+        if (L.data[i] == cur) {
+            *pre = L.data[i - 1];
+            return OK;
         }
     }
 
@@ -100,17 +109,17 @@ int PriorElem(SeqList L, ElemType cur_e, ElemType* pre_e)
 }
 
 // 返回后继元素值
-int NextElem(SeqList L, ElemType cur_e, ElemType* next_e)
+Status NextElem (SeqList L, ElemType cur, ElemType* next)
 {
     if (L.length == 0) {
         return ERROR;
     }
 
-    for (int i = 0; i < L.length; ++i) {
-        // 当前元素cur_e不是最后一个元素则有后继
-        if ((i != L.length - 1) && L.data[i] == cur_e) {
-            *next_e = L.data[i + 1];
-            return *next_e;
+    // 当前元素cur不是最后一个元素则有后继
+    for (int i = 0; i < L.length - 1; ++i) {
+        if (L.data[i] == cur) {
+            *next = L.data[i + 1];
+            return OK;
         }
     }
 
@@ -120,7 +129,7 @@ int NextElem(SeqList L, ElemType cur_e, ElemType* next_e)
 // 插入操作
 // 在顺序表L的第i（1 ≤ i ≤ length + 1）个位置插入新元素e
 // 插入成功返回OK，插入失败返回ERROR
-int ListInsert(SeqList* L, int i, ElemType e)
+Status ListInsert (SeqList* L, int i, ElemType e)
 {
     if (i < 1 || i > L->length + 1) {           // 判断i的范围是否有效
         return ERROR;
@@ -143,7 +152,7 @@ int ListInsert(SeqList* L, int i, ElemType e)
 // 删除操作
 // 删除顺序表L中第i（1 ≤ i ≤ length）个位置的元素
 // 删除成功返回OK，删除失败返回ERROR。如删除成功，用e返回删除元素的值
-int ListDelete(SeqList* L, int i, ElemType* e) 
+Status ListDelete (SeqList* L, int i, ElemType* e) 
 {
     if (i < 1 || i > L->length) {               // 判断i的范围是否有效
         return ERROR;
@@ -161,14 +170,14 @@ int ListDelete(SeqList* L, int i, ElemType* e)
 }
 
 // 遍历操作
-int TraverseList(SeqList L)
+Status TraverseList (SeqList L, Status (*Visit)(ElemType))
 {
     if (L.length == 0) {
         return ERROR;
     }
 
     for (int i = 0; i < L.length; ++i) {
-        printf("data[%d] = %d\n", i, L.data[i]);
+        Visit (L.data[i]);
     }
 
     printf("\n");
