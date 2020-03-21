@@ -101,17 +101,17 @@ Status Pop (SqStack* S, ElemType* e)
 // 遍历栈
 Status StackTraverse (SqStack S, Status (*Visit)(ElemType))
 {   
-    if (S.top != -1) {
-        while (S.top != -1) {
-            Visit (S.data[S.top--]);
-        }
-
-        printf("\n");
-    
-        return OK;
-    } else {
+    if (S.top == -1) {
         return ERROR;
     }
+
+    while (S.top != -1) {
+        Visit (S.data[S.top--]);
+    }
+
+    printf("\n");
+
+    return OK;
 }
 
 /*======== 第 2 种 ========*/
@@ -221,15 +221,15 @@ Status Pop (SeqStack* S, ElemType* e)
 // 遍历栈
 Status StackTraverse (SeqStack S, Status (*Visit)(ElemType))
 {
-    if (S.top != S.base) {
-        while (S.top != S.base) {
-            Visit (*(--S.top));
-        }
-
-        printf("\n");
-        
-        return OK;
-    } else {
+    if (S.top == S.base) {
         return ERROR;
     }
+
+    while (S.top != S.base) {
+        Visit (*(--S.top));
+    }
+
+    printf("\n");
+    
+    return OK;
 }
