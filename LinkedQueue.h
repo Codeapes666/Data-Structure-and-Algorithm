@@ -34,7 +34,7 @@ Status InitQueue (LinkQueue* Q)      // 构造一个只有头结点的空队
 {   // 生成新结点作为头结点，队头和队尾指针指向头结点
     Q->front = Q->rear = (QNode*)malloc(sizeof(QNode));
 
-    if (Q->front == NULL) {         // 若内存分配失败
+    if (Q->front == NULL) {         // 内存分配失败
         exit(OVERFLOW);
     }
 
