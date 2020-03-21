@@ -10,25 +10,33 @@
 typedef int ElemType;
 typedef int Status;
 
-// s->top有两种可能，一种是指向栈顶元素，另一种是指向比栈顶元素更高一层的空元素
+Status Visit(ElemType e)
+{
+    printf("%d ", e);
+
+    return OK;
+}
+
+// S->top有两种可能，一种是指向栈顶元素，一种是指向比栈顶元素更高一层的空元素
 
 /*======== 第 1 种 ========*/
 
 // 顺序栈的存储结构
-typedef struct {
+typedef struct 
+{
     ElemType data[MAXSIZE];
     int top;                        // 用来存放栈顶元素的下标
 } SqStack;
 
 // 栈的初始化
-Status InitStack(SqStack* S)
+Status InitStack (SqStack* S)
 {
     S->top = -1;
     return OK;
 }
 
 // 清空栈
-Status ClearStack(SqStack* S)
+Status ClearStack (SqStack* S)
 {
     if (S->top != -1) {
         S->top = -1;
@@ -39,7 +47,7 @@ Status ClearStack(SqStack* S)
 }
 
 // 判空
-bool StackEmpty(SqStack S)
+bool StackEmpty (SqStack S)
 {
     if (S.top == -1) {
         return true;
@@ -49,13 +57,13 @@ bool StackEmpty(SqStack S)
 }
 
 // 求栈长度
-Status StackLength(SqStack S)
+int StackLength(SqStack S)
 {
-    return S.top;
+    return S.top + 1;
 }
 
 // 取栈顶元素
-ElemType GetTop(SqStack S, ElemType* e)
+Status GetTop (SqStack S, ElemType* e)
 {
     if (S.top == -1) {
         return ERROR;
@@ -67,7 +75,7 @@ ElemType GetTop(SqStack S, ElemType* e)
 }
 
 // 入栈
-Status Push(SqStack* S, ElemType e)
+Status Push (SqStack* S, ElemType e)
 {
     if (S->top == MAXSIZE - 1) {                // 栈满
         return ERROR;
@@ -79,7 +87,7 @@ Status Push(SqStack* S, ElemType e)
 }
 
 // 出栈
-Status Pop(SqStack* S, ElemType* e)
+Status Pop (SqStack* S, ElemType* e)
 {
     if (S->top == -1) {                         // 栈空
         return ERROR;
@@ -91,46 +99,53 @@ Status Pop(SqStack* S, ElemType* e)
 }
 
 // 遍历栈
-Status StackTraverse(SqStack S)
-{
-    while (S.top != -1) {
-        printf("%d ", S.data[S.top--]);
-    }
-    printf("\n");
+Status StackTraverse (SqStack S, Status (*Visit)(ElemType))
+{   
+    if (S.top != -1) {
+        while (S.top != -1) {
+            Visit (S.data[S.top--]);
+        }
+
+        printf("\n");
     
-    return OK;
+        return OK;
+    } else {
+        return ERROR;
+    }
 }
 
 /*======== 第 2 种 ========*/
 
 // 顺序栈的存储结构
-typedef struct {
-    ElemType* base;                 // 栈底指针
-    ElemType* top;                  // 栈顶指针
-    int stacksize;                  // 栈可用的最大容量
+typedef struct 
+{
+    ElemType* base;                             // 栈底指针
+    ElemType* top;                              // 栈顶指针
+    int stacksize;                              // 栈可用的最大容量
 } SeqStack;
 
 // 栈的初始化
-Status InitStack(SeqStack* S)
-{   // 为顺序栈动态分配一个最大容量为MAXSIZE的数组空间
+Status InitStack (SeqStack* S)
+{   
+    // 为顺序栈动态分配一个最大容量为MAXSIZE的数组空间
     S->base = (ElemType*)malloc(sizeof(ElemType) * MAXSIZE);
 
-    if (S->base == NULL) {          // 若内存分配失败
+    if (S->base == NULL) {                      // 空间分配失败
         exit(OVERFLOW);
     }
 
-    S->top = S->base;               // top初始化为base，空栈
-    S->stacksize = MAXSIZE;         // stacksize置为栈的最大容量MAXSIZE
+    S->top = S->base;                           // top初始化为base，空栈
+    S->stacksize = MAXSIZE;                     // stacksize置为栈的最大容量MAXSIZE
 
     return OK;
 }
 
 // 销毁栈
-Status DestoryStack(SeqStack* S)
+Status DestoryStack (SeqStack* S)
 {
     if (S->base != NULL) {
-        free(S->base);              // 释放空间
-        S->base = NULL;             // 指针置空
+        free(S->base);                          // 释放空间
+        S->base = NULL;                         // 指针置空
         S->top = NULL;
         S->stacksize = 0;
 
@@ -141,7 +156,7 @@ Status DestoryStack(SeqStack* S)
 }
 
 // 清空栈
-Status ClearStack(SeqStack* S)
+Status ClearStack (SeqStack* S)
 {
     if (S->base != NULL) {
         S->top = S->base;
@@ -152,7 +167,7 @@ Status ClearStack(SeqStack* S)
 }
 
 // 判空
-bool StackEmpty(SeqStack S)
+bool StackEmpty (SeqStack S)
 {
     if (S.top == S.base) {
         return true;
@@ -162,17 +177,21 @@ bool StackEmpty(SeqStack S)
 }
 
 // 求栈长度
-Status StackLength(SeqStack S)
+int StackLength (SeqStack S)
 {
     return S.top - S.base;
 }
 
 // 取栈顶元素
-ElemType GetTop(SeqStack S)
+Status GetTop(SeqStack S, ElemType* e)
 {
-    if (S.top != S.base) {         // 栈非空
-        return *(S.top - 1);       // 返回栈顶元素的值，栈顶指针不变
+    if (S.top == S.base) {                      // 栈为空
+        return ERROR;
     }
+
+    *e = *(S.top - 1);                          // 将栈顶元素赋给e
+
+    return OK;
 }
 
 // 入栈
@@ -188,7 +207,7 @@ Status Push(SeqStack* S, ElemType e)
 }
 
 // 出栈
-Status Pop(SeqStack* S, ElemType* e)
+Status Pop (SeqStack* S, ElemType* e)
 {
     if (S->top == S->base) {                    // 栈空
         return ERROR;
@@ -200,12 +219,17 @@ Status Pop(SeqStack* S, ElemType* e)
 }
 
 // 遍历栈
-Status StackTraverse(SeqStack S)
+Status StackTraverse (SeqStack S, Status (*Visit)(ElemType))
 {
-    while (S.top != S.base) {
-        printf("%d ", *(--S.top));
-    }
-    printf("\n");
+    if (S.top != S.base) {
+        while (S.top != S.base) {
+            Visit (*(--S.top));
+        }
 
-    return OK;
+        printf("\n");
+        
+        return OK;
+    } else {
+        return ERROR;
+    }
 }
