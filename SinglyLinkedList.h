@@ -9,16 +9,24 @@
 typedef int ElemType;
 typedef int Status;
 
+Status Visit(ElemType e)
+{
+    printf("%d ", e);
+
+    return OK;
+}
+
 // 定义单链表结点类型
-typedef struct LNode {
+typedef struct LNode 
+{
     ElemType data;          // 数据域
     struct LNode* next;     // 指针域
-}LNode, *LinkList;          // LinkList为指向结构体LNode的指针类型
+} LNode, *LinkList;         // LinkList为指向结构体LNode的指针类型
 
 // LinkList与LNode*，两者本质上是等价的
 
 // 初始化单链表
-Status InitList(LinkList* L)
+Status InitList (LinkList* L)
 {
     *L = (LinkList)malloc(sizeof(LNode));
 
@@ -32,8 +40,52 @@ Status InitList(LinkList* L)
     return OK;
 }
 
+// 销毁操作
+Status DestroyList (LinkList* L)
+{
+    if (*L == NULL) {
+        return ERROR;
+    }
+    
+    LinkList p = (*L)->next;
+    LinkList q = NULL;
+    
+    while (p != NULL) {
+        q = p->next;
+        free(p);
+        p = q;
+    }
+    
+    free(*L);
+    *L = NULL;
+
+    return OK;
+}
+
+// 清空操作
+Status ClearList (LinkList L)
+{
+    if (L == NULL) {
+        return ERROR;
+    }
+
+    // p指向头结点的下一个结点
+    LinkList p = L->next;
+    LinkList q = NULL;
+
+    while (p != NULL) {
+        q = p->next;
+        free(p);
+        p = q;
+    }
+    
+    L->next = NULL;
+
+    return OK;
+}
+
 // 前插法创建单链表
-LinkList CreatList_H(LinkList* L)
+LinkList CreatListFront (LinkList* L)
 {
     // 从表尾到表头逆向建立单链表L，每次均在头结点之后插入元素
     *L = (LinkList)malloc(sizeof(LNode));           // 创建头结点
@@ -64,7 +116,7 @@ LinkList CreatList_H(LinkList* L)
 }
 
 // 后插法创建单链表
-LinkList CreatList_R(LinkList* L)
+LinkList CreatListRear (LinkList* L)
 {
     // 从表头到表尾正向建立单链表L，每次均在表尾插入元素
     *L = (LinkList)malloc(sizeof(LNode));            // 创建头结点
@@ -96,7 +148,7 @@ LinkList CreatList_R(LinkList* L)
 }
 
 // 求单链表的长度
-Status Length(LinkList L)
+int ListLength (LinkList L)
 {
     int length = 0;
     LNode* p = L->next;
@@ -111,7 +163,7 @@ Status Length(LinkList L)
 
 // 按序查找
 // 在带头结点的单链表L中根据序号i获取元素的值，用e返回L中第i个数据元素的值
-Status GetElem(LinkList L, int i ,ElemType* e)
+Status GetElem (LinkList L, int i ,ElemType* e)
 {
     LinkList p = L->next;                           // 初始化，p指向首原结点
     int j = 1;                                      // 计数器j初值赋为1
@@ -132,7 +184,7 @@ Status GetElem(LinkList L, int i ,ElemType* e)
 
 // 按值查找
 // 在带头结点的单链表L中查找值为e的元素
-LinkList LocateElem(LinkList L, ElemType e)
+LinkList LocateElem (LinkList L, ElemType e)
 {
     LinkList p = L->next;                           // 初始化，p指向首原结点
     
@@ -145,9 +197,59 @@ LinkList LocateElem(LinkList L, ElemType e)
     return p;                       
 }
 
+// 返回前驱元素值
+Status PriorElem (LinkList L, ElemType cur, ElemType* pre)
+{
+    int length = ListLength(L);
+
+    if (length == 0) {
+        return ERROR;
+    }
+
+    // 当前元素cur不是第一个元素则有前驱值
+    LinkList p = L->next;
+    LinkList q = NULL;
+
+    while (p != NULL && p->data != cur) {
+        q = p;
+        p = p->next; 
+    }
+    
+    if (length != 1 && q->next->data == cur) {
+        *pre = q->data;
+        return OK;
+    }
+
+    return ERROR;
+}
+
+// 返回后继元素值
+Status NextElem (LinkList L, ElemType cur, ElemType* next)
+{
+    int length = ListLength(L);
+
+    if (length == 0) {
+        return ERROR;
+    }
+
+    LinkList p = L->next;
+
+    while (p != NULL && p->data != cur) {
+        p = p->next; 
+    }
+    
+    // 当前元素cur不是最后一个元素则有后继值
+    if (p->next != NULL && p->data == cur) {
+        *next = p->next->data;
+        return OK;
+    }
+
+    return ERROR;
+}
+
 // 插入操作
 // 在带头结点的单链表L中第i个位置插入值为e的新结点
-Status ListInsert(LinkList* L, int i, ElemType e)
+Status ListInsert (LinkList* L, int i, ElemType e)
 {
     LinkList p = *L;
     int j = 0;
@@ -178,7 +280,7 @@ Status ListInsert(LinkList* L, int i, ElemType e)
 
 // 删除操作
 // 在带头结点的单链表L中，删除第i个元素
-Status ListDelete(LinkList* L, int i)
+Status ListDelete (LinkList* L, int i)
 {
     LinkList p = *L;
     int j = 0;
@@ -203,7 +305,7 @@ Status ListDelete(LinkList* L, int i)
 }
 
 // 判空操作
-bool Empty(LinkList L)
+bool ListEmpty (LinkList L)
 {
     // 若头结点指向的下一个结点是NULL，则链表为空
 	if (L->next == NULL) {
@@ -214,7 +316,7 @@ bool Empty(LinkList L)
 }
 
 // 遍历操作
-Status PrintList(LinkList L)
+Status ListTraverse (LinkList L, Status (*Visit)(ElemType))
 {
     if (L == NULL) {
         return ERROR;
@@ -224,53 +326,9 @@ Status PrintList(LinkList L)
     LinkList p = L->next;
 
     while (p != NULL) {
-        printf("%d ", p->data);
+        Visit (p->data);
         p = p->next;
     }
     
-    return OK;
-}
-
-// 销毁操作
-Status DestroyList(LinkList* L)
-{
-    if (*L == NULL) {
-        return ERROR;
-    }
-    
-    LinkList p = (*L)->next;
-    LinkList q = NULL;
-    
-    while (p != NULL) {
-        q = p->next;
-        free(p);
-        p = q;
-    }
-    
-    free(*L);
-    *L = NULL;
-
-    return OK;
-}
-
-// 清空操作
-Status ClearList(LinkList L)
-{
-    if (L == NULL) {
-        return ERROR;
-    }
-
-    // p指向头结点的下一个结点
-    LinkList p = L->next;
-    LinkList q = NULL;
-
-    while (p != NULL) {
-        q = p->next;
-        free(p);
-        p = q;
-    }
-    
-    L->next = NULL;
-
     return OK;
 }
