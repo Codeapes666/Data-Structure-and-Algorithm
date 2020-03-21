@@ -128,7 +128,7 @@ Status PriorElem(SeqList L, ElemType cur, ElemType* pre)
         return ERROR;
     }
 
-    // 当前元素cur不是第一个元素则有前驱
+    // 当前元素cur不是第一个元素则有前驱值
     for (int i = 1; i < L.length; ++i) {
         if (L.data[i] == cur) {
             *pre = L.data[i - 1];
@@ -146,7 +146,7 @@ Status NextElem(SeqList L, ElemType cur, ElemType* next)
         return ERROR;
     }
 
-    // 当前元素cur不是最后一个元素则有后继
+    // 当前元素cur不是最后一个元素则有后继值
     for (int i = 0; i < L.length - 1; ++i) {
         if (L.data[i] == cur) {
             *next = L.data[i + 1];
