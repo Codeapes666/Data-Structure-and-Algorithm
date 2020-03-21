@@ -18,7 +18,7 @@ typedef struct DLNode
 
 // 按序查找
 // 取出带头结点的双向链表中第i个位置的结点指针
-DLNode* GetElem(DLinkList L, int i)
+DLNode* GetElem (DLinkList L, int i)
 {
     if (i == 0) {               // 若等于0，则返回头结点
         return L;
@@ -42,7 +42,7 @@ DLNode* GetElem(DLinkList L, int i)
 
 // 插入操作
 // 在带头结点的双向链表L中第i个位置之前插入元素e
-Status ListInsert(DLinkList* L, int i, ElemType e)
+Status ListInsert (DLinkList* L, int i, ElemType e)
 {
     DLinkList p = NULL;
     if ((p = GetElem(*L, i)) == NULL) {         // 在L中确定第i个元素的位置指针p
@@ -74,7 +74,7 @@ Status ListInsert(DLinkList* L, int i, ElemType e)
 
 // 删除操作
 // 删除带头结点的双向链表L中第i个元素
-Status ListDelete(DLinkList* L, int i)
+Status ListDelete (DLinkList* L, int i)
 {
     DLinkList p = NULL;
     if ((p = GetElem(*L, i)) == NULL) {         // 在L中确定第i个元素的位置指针p
