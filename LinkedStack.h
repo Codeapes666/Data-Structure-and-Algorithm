@@ -114,16 +114,17 @@ Status Pop (LinkStack* S, ElemType* e)
 // 遍历栈
 Status StackTraverse (LinkStack S, Status (*Visit)(ElemType))
 {
-    if (S != NULL) {
-        while (S != NULL) {
-            Visit (S->data);
-            S = S->next;
-        }
-        printf("\n");
-
-        return OK;
-    } else {
+    if (S == NULL) {
         return ERROR;
     }
+
+    while (S != NULL) {
+        Visit (S->data);
+        S = S->next;
+    }
+    
+    printf("\n");
+
+    return OK;
 }
 
