@@ -11,8 +11,8 @@ typedef int Status;
 
 // 队列的链式存储结构
 typedef struct QNode {              // 链式队列结点
-    ElemType data;
-    struct QNode* next;
+    ElemType data;                  // 数据域
+    struct QNode* next;             // 指针域
 } QNode, *QueuePtr;
 
 typedef struct {                    // 链式队列
@@ -21,16 +21,15 @@ typedef struct {                    // 链式队列
 } LinkQueue;
 
 // 链队的初始化
-Status InitQueue(LinkQueue* Q)      // 构造一个只有一个头结点的空队
-{   // 生成新结点作为头结点
-    QNode* p = (QNode*)malloc(sizeof(QNode));
+Status InitQueue(LinkQueue* Q)      // 构造一个只有头结点的空队
+{   // 生成新结点作为头结点，队头和队尾指针指向头结点
+    Q->front = Q->rear = (QNode*)malloc(sizeof(QNode));
 
-    if (p == NULL) {                // 若内存分配失败
+    if (Q->front == NULL) {         // 若内存分配失败
         exit(OVERFLOW);
     }
 
-    Q->front = Q->rear = p;         // 队头和队尾指针指向头结点
-
+    Q->front->data = 0;             // 头结点的数据域置空
     Q->front->next = NULL;          // 头结点的指针域置空
 
     return OK;
@@ -43,7 +42,7 @@ bool QueueEmpty(LinkQueue Q)
         exit(1);
     }
     
-    if (Q.front == Q.rear) {
+    if (Q.front == Q.rear) {        // 或Q.front->next == NULL
         return true;
     }
     
@@ -67,21 +66,19 @@ Status DestroyQueue(LinkQueue* Q)
     }
     
     free(Q->front);
-    free(Q->rear);
-    
-    Q->rear = Q->front = NULL;
+    Q->front = NULL;
 
     return OK;
 }
 
 // 清空链队
-Status ClearQueue(LinkQueue Q)
+Status ClearQueue(LinkQueue* Q)
 {
-    if (Q.front == NULL) {
+    if (Q->front == NULL) {
         return ERROR;
     }
     
-    QueuePtr p = Q.front->next;
+    QueuePtr p = Q->front->next;
     QueuePtr q = NULL;
 
     while (p != NULL) {
@@ -90,7 +87,8 @@ Status ClearQueue(LinkQueue Q)
         p = q;
     }
 
-    Q.front->next = Q.rear->next = NULL;
+    Q->front = Q->rear;
+    Q->front->next = NULL;
 
     return OK;
 }
