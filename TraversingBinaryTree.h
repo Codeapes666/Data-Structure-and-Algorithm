@@ -17,7 +17,7 @@ typedef char TElemType;
 typedef int Status;
 
 // 访问根结点
-Status Visit(TElemType e)
+Status Visit (TElemType e)
 {
     printf("%c ", e);
 
@@ -323,16 +323,16 @@ Status InOrderTraverseNonRecursion (BiTree T, Status (*Visit)(TElemType))
         return ERROR;
     }
 
-    LinkStack S;
-    InitStack(&S);                              // 初始化栈
+    LinkStack* S = NULL;
+    InitStack(S);                               // 初始化栈
     BiTree p = T;                               // p是遍历指针
     
-    while (p != NULL || !StackEmpty(&S)) {      // 栈不空或p不空时循环
+    while (p != NULL || !StackEmpty(S)) {       // 栈不空或p不空时循环
         if (p != NULL) {                        // 根指针进栈，遍历左子树
-            Push(&S, p);
+            Push(S, p);
             p = p->lchild;                      // 每遇到非空二叉树先向左走
         } else {                        
-            Pop(&S, &p);                        // 退栈
+            Pop(S, &p);                         // 退栈
             Visit(p->data);                     // 访问根结点
             p = p->rchild;                      // 再向右子树走
         }
@@ -366,24 +366,24 @@ Status LevelOrderTraverse (BiTree T, Status (*Visit)(TElemType))
         return ERROR;
     }
 
-    LinkQueue Q;
-    InitQueue(&Q);                              // 初始化辅助队列
+    LinkQueue* Q = NULL;
+    InitQueue(Q);                               // 初始化辅助队列
 
     BiTree p = NULL;
 
-    EnQueue(&Q, T);                             // 根结点入队
+    EnQueue(Q, T);                             // 根结点入队
 
-    while (!QueueEmpty(Q)) {                    // 队列不空则循环
-        DeQueue(&Q, &p);                        // 队头元素出队
+    while (!QueueEmpty(*Q)) {                   // 队列不空则循环
+        DeQueue(Q, &p);                        // 队头元素出队
 
         Visit(p->data);                         // 访问当前p所指向结点
 
         if (p->lchild != NULL) {                // 左子树不空，则左子树入队列
-            EnQueue(&Q, p->rchild);
+            EnQueue(Q, p->rchild);
         }
 
         if (p->rchild != NULL) {                // 右子树不空，则右子树入队列
-            EnQueue(&Q, p->rchild);
+            EnQueue(Q, p->rchild);
         }
     }
 
