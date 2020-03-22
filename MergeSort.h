@@ -1,22 +1,27 @@
 #include <stdlib.h>
 
-#define MAXSIZE 50              // 顺序表的最大长度
+#define MAXSIZE     100         // 顺序表的最大长度
+#define OK          1
+#define ERROR       0
 
 // 待排序记录的数据类型定义
 typedef int KeyType;            // 定义关键字类型为整型
+typedef int Status;
 
-typedef struct {
+typedef struct
+{
     KeyType key;                // 关键字项
-}RedType;                       // 记录类型
+} RedType;                      // 记录类型
 
-typedef struct {
+typedef struct
+{
     RedType* r;                 // r[0]闲置或用做哨兵
     int length;                 // 顺序表长度
-}SeqList;                       // 顺序表类型
+} SeqList;                      // 顺序表类型
 
 // 归并相邻两个有序子序列
 // 将有序表R.r[low...mid]和R.r[mid + 1...high]归并为有序表L->r[low...high]
-void Merge(SeqList R, SeqList* L, int low, int mid, int high)
+Status Merge(SeqList R, SeqList* L, int low, int mid, int high)
 {
     int i = low;
     int j = mid + 1;
@@ -39,14 +44,16 @@ void Merge(SeqList R, SeqList* L, int low, int mid, int high)
     // 将剩余的R.r[j...high]复制到L中
     while (j <= high) {
         L->r[k++] = R.r[j++];
-    }   
+    } 
+
+    return OK;  
 }
 
 // 归并排序
 // 时间复杂度：O(nlog2n)
 // 空间复杂度：O(n)
 // 稳定性：稳定
-void MergeSort(SeqList R, SeqList* L, int low, int high)
+Status MergeSort(SeqList R, SeqList* L, int low, int high)
 {
     if (low == high) {
         L->r[low] = R.r[low];
@@ -81,4 +88,5 @@ void MergeSort(SeqList R, SeqList* L, int low, int high)
         }
     }
 
+    return OK;
 }
