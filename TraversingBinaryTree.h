@@ -195,7 +195,7 @@ Status CreateBiTree (BiTree* T)
 
     scanf("%c", &ch);
 
-    if (ch == ' ') {                                // ch是一个“ ”字符，表明该二叉树为空树
+    if (ch == ' ') {                                // ch是一个空格字符，表明该二叉树为空树
         *T = NULL;
     } else {
         *T = (BiTNode*)malloc(sizeof(BiTNode));     // 生成根结点
@@ -288,13 +288,14 @@ Status PreOrderTraverse (BiTree T, Status (*Visit)(TElemType))
 
     // (*Visit) (T->data);
     Visit (T->data);                                    // 访问根结点
+
     if (PreOrderTraverse (T->lchild, Visit)) {          // 递归遍历左子树
         if (PreOrderTraverse (T->rchild, Visit)) {      // 递归遍历右子树
             return OK;
         }
     }     
 
-    return OK;
+    return ERROR;
 }
 
 // 中序遍历
@@ -312,7 +313,7 @@ Status InOrderTraverse (BiTree T, Status (*Visit)(TElemType))
         }
     }
 
-    return OK;
+    return ERROR;
 }
 
 // 中序遍历（非递归）
@@ -355,7 +356,7 @@ Status PostOrderTraverse (BiTree T, Status (*Visit)(TElemType))
         }
     }
 
-    return OK;
+    return ERROR;
 }
 
 // 层次遍历
@@ -387,5 +388,7 @@ Status LevelOrderTraverse (BiTree T, Status (*Visit)(TElemType))
         }
     }
 
+    printf("\n");
+    
     return OK;
 }
