@@ -1,15 +1,20 @@
-#define MAXSIZE 50              // 顺序表的最大长度
+#define MAXSIZE     100         // 顺序表的最大长度
+#define OK          1
+#define ERROR       0
 
 typedef int KeyType;            // 定义关键字类型为整型
+typedef int Status;
 
-typedef struct {
+typedef struct
+{
     KeyType key;                // 关键字项
-}RedType;                       // 记录类型
+} RedType;                      // 记录类型
 
-typedef struct {
+typedef struct
+{
     RedType r[MAXSIZE + 1];     // r[0]闲置或用做哨兵
     int length;                 // 顺序表长度
-}SeqList;                       // 顺序表类型
+} SeqList;                      // 顺序表类型
 
 
 // Partition为分割函数
@@ -48,7 +53,7 @@ int Partition(SeqList* L, int low, int high) {
 // 平均时间复杂度：O(nlog2n)
 // 空间复杂度：O(log2n)
 // 稳定性：不稳定
-void QuickSort(SeqList* L, int low, int high) {
+Status QuickSort(SeqList* L, int low, int high) {
 
     // 调用前置初值：low = 1; high = L.length;
     if (low < high) {
@@ -61,4 +66,6 @@ void QuickSort(SeqList* L, int low, int high) {
         // 对右子表进行递归排序
         QuickSort(L, pivotpos + 1, high);
     }
+
+    return OK;
 }
