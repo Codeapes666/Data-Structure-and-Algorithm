@@ -10,10 +10,11 @@ typedef int Status;
 #define HASHSIZE 12             // 定义散列表长为数组的长度
 #define NULLKEY   0             // 单元为空的标记
 
-typedef struct {
+typedef struct 
+{
     int* elem;                  // 数据元素存储基址，动态分配数组
     int count;                  // 当前数据元素个数
-}HashTable;
+} HashTable;
 
 int m = 0;                      // 散列表表长，全局变量
 
@@ -23,8 +24,9 @@ Status initHashTable(HashTable* HT)
     int i = 0;
     m = HASHSIZE;
     HT->count = m;
+
     HT->elem = (int*)malloc(sizeof(int) * m);
-    if (HT->elem == NULL) {     // 若内存分配失败
+    if (HT->elem == NULL) {     // 内存分配失败
         exit(OVERFLOW);
     }
 
@@ -36,7 +38,7 @@ Status initHashTable(HashTable* HT)
 }
 
 // 构造散列函数
-Status Hash(int key)
+int Hash(int key)
 {
     return key % m;                         // 构造方法为除留余数法
 }
@@ -63,7 +65,7 @@ bool SearchHash(HashTable HT, int key, int* addr)
     while (HT.elem[*addr] != key) {         // 若HT.elem[*addr] == key，则说明查找成功，直接返回
         *addr = (*addr + 1) % m;            // 开放定址法的线性探测
 
-        // 如果查找到NULLKEY或循环回到原点，则说明关键字不存在，返回FALSE
+        // 如果查找到NULLKEY或循环回到原点，则说明关键字不存在，返回false
         if (HT.elem[*addr] == NULLKEY || *addr == Hash(key)) {
             return false;
         }
