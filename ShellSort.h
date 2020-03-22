@@ -1,22 +1,28 @@
 // 待排序记录的数据类型定义
-#define MAXSIZE 50              // 顺序表的最大长度
+#define MAXSIZE     100         // 顺序表的最大长度
+#define OK          1
+#define ERROR       0
+
 
 typedef int KeyType;            // 定义关键字类型为整型
+typedef int Status;
 
-typedef struct {
+typedef struct
+{
     KeyType key;                // 关键字项
-}RedType;                       // 记录类型
+} RedType;                      // 记录类型
 
-typedef struct {
+typedef struct
+{
     RedType r[MAXSIZE + 1];     // r[0]闲置或用做哨兵
     int length;                 // 顺序表长度
-}SeqList;                       // 顺序表类型
+} SeqList;                      // 顺序表类型
 
 // 希尔排序
 // 当n在某个特定范围内，时间复杂度：O(n^1.3)
 // 空间复杂度：O(1)
 // 稳定性：不稳定
-void ShellSort(SeqList* L, int dk)
+Status ShellSort(SeqList* L, int dk)
 {
     // 增量变化
     for (dk = L->length / 2; dk >= 1; dk /= 2) {
@@ -37,4 +43,6 @@ void ShellSort(SeqList* L, int dk)
             }
         }
     }
+
+    return OK;
 }
